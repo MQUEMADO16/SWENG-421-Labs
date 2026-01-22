@@ -82,7 +82,7 @@
             panel1.BackColor = SystemColors.ButtonHighlight;
             panel1.Location = new Point(29, 41);
             panel1.Name = "panel1";
-            panel1.Size = new Size(749, 466);
+            panel1.Size = new Size(754, 466);
             panel1.TabIndex = 4;
             panel1.MouseDown += panel1_MouseDown;
             panel1.MouseUp += panel1_MouseUp;
@@ -156,9 +156,9 @@
             // 
             // button5
             // 
-            button5.Location = new Point(698, 12);
+            button5.Location = new Point(688, 11);
             button5.Name = "button5";
-            button5.Size = new Size(75, 23);
+            button5.Size = new Size(95, 23);
             button5.TabIndex = 12;
             button5.Text = "Update Color";
             button5.UseVisualStyleBackColor = true;
@@ -169,7 +169,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLight;
-            ClientSize = new Size(805, 548);
+            ClientSize = new Size(812, 548);
             Controls.Add(button5);
             Controls.Add(button4);
             Controls.Add(textBox6);

@@ -15,6 +15,13 @@ namespace M4_Lab.p1
         private string _name = "Desk";
         private double _price;
 
+        public Desk(int id, double price, string name)
+        {
+            _ID = id;
+            _price = price;
+            _name = name;
+        }
+
         // Properties
         public int ID { get => _ID; }
         public string name { get => _name; set => _name = value; }

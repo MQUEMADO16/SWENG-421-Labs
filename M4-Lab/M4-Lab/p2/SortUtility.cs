@@ -20,9 +20,11 @@ namespace M4_Lab.p2
         public void setName(string sortName) { this.sortName = sortName; }
 
         public virtual List<T> sort(List<T> data)
-        {
-            return new List<T>();   // temp place holder
-            // bubble sort implementation
+        {   
+            BubblesortUtility bs = new BubblesortUtility(getName());
+            List<ProductIF> listToSort = data.Cast<ProductIF>().ToList();
+            List<ProductIF> sortedList = bs.sort(listToSort);
+            return sortedList.Cast<T>().ToList();
         }
     }
 }

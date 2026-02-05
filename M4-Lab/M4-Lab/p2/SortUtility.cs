@@ -20,11 +20,24 @@ namespace M4_Lab.p2
         public void setName(string sortName) { this.sortName = sortName; }
 
         public virtual List<T> sort(List<T> data)
-        {   
-            BubblesortUtility bs = new BubblesortUtility(getName());
-            List<ProductIF> listToSort = data.Cast<ProductIF>().ToList();
-            List<ProductIF> sortedList = bs.sort(listToSort);
-            return sortedList.Cast<T>().ToList();
+        {
+            List<T> sortedList = data;
+
+            int n = sortedList.Count;
+            for (int i = 0; i < n - 1; i++)
+            {
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (sortedList[j].CompareTo(sortedList[j + 1]) > 0)
+                    {
+                        T temp = sortedList[j];
+                        sortedList[j] = sortedList[j + 1];
+                        sortedList[j + 1] = temp;
+                    }
+                }
+            }
+
+            return sortedList;
         }
     }
 }

@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 
 namespace M4_Lab.p2
 {
-    public class QuicksortUtility
+    public class QuicksortUtility<T> : SortUtility<ProductIF>
     {
+        public QuicksortUtility(string sortName) : base(sortName)
+        {
+        }
 
-        public List<ProductIF> sort(List<ProductIF> data)
+        public override List<ProductIF> sort(List<ProductIF> data)
         {   
 
-            data.Sort();
+            data.Sort();    // Using built-in sort method which implements quicksort
             print(data);
             return data;
         }

@@ -16,9 +16,11 @@ namespace M4_Lab.p1
             List<ProductIF> products2 = grabber.getProducts();
             
             Company xyz = new Company();
-            xyz.sortUtility = new SortUtility<ProductIF>("bubblesort");
+            xyz.sortUtility = new SortUtilityProxy<ProductIF>("bubblesort");
+            Console.WriteLine(xyz.sortUtility.getName());
             xyz.sortUtility.sort(products1);
-            xyz.sortUtility.setName("quicksort");
+            xyz.sortUtility = new SortUtility<ProductIF>("quicksort");
+            Console.WriteLine(xyz.sortUtility.getName());
             xyz.sortUtility.sort(products2);
         }
 

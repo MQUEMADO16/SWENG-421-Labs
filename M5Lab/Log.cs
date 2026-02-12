@@ -4,7 +4,7 @@ namespace M5Lab
     {
         public override void compute()
         {   
-            value = Math.Log(value);
+            value = Math.Log10(value);
         }
 
         public override void compute(double x)

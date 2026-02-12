@@ -1,4 +1,4 @@
-class OperationFactory
+class OperationFactory: OperationFactoryIF
 {
     public OperationIF create(string className)
     {

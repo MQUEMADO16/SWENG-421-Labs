@@ -5,7 +5,7 @@ using System.Text;
 namespace M5Lab
 {
     public interface OperationFactoryIF
-{
-    public OperationIF create(string className);
-}
+    {
+        public OperationIF create(string className);
+    }
 }

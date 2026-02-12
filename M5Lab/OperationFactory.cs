@@ -1,3 +1,15 @@
+<<<<<<< HEAD
+=======
+class OperationFactory: OperationFactoryIF
+{
+    public OperationIF create(string className)
+    {
+        {
+            Type type = Type.GetType(className);
+            
+            if (type == null)
+                throw new ArgumentException($"Unknown class: {className}");
+>>>>>>> b63706590b4a58bed05c154f6834a93516c9fe37
 
 namespace M5Lab
 {

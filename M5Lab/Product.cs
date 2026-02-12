@@ -1,7 +1,10 @@
-class Product : Operation
+namespace M5Lab
 {
-    public override void compute(double x)
-    {   
-        value *= x;
+    public class Product : Operation
+    {
+        public override void compute(double x)
+        {   
+            value *= x;
+        }
     }
 }

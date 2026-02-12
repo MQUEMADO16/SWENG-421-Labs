@@ -1,7 +1,10 @@
-interface OperationIF
+namespace M5Lab
 {
-    public double getValue();
+    public interface OperationIF
+    {
+        public double getValue();
 
-    public void compute(double x);
-    public void compute();
-}    
+        public void compute(double x);
+        public void compute();
+    }
+}

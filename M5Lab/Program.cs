@@ -1,15 +1,21 @@
-class Program
+using System.Diagnostics;
+
+namespace M5Lab
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        OperationFactory myFactory = new OperationFactory();
-        OperationIF operatorAddition = myFactory.create("Sum");
-        OperationIF operatorLog = myFactory.create("Log");
+        public static void Main(string[] args)
+        {
+            OperationFactoryIF myFactory = new OperationFactory();
+            OperationIF operatorAddition = myFactory.create("Sum");
+            OperationIF operatorLog = myFactory.create("Log");
 
-        operatorAddition.compute(5);
-        Console.WriteLine(operatorAddition.getValue());
+            operatorAddition.compute(5);
+            Debug.WriteLine(operatorAddition.getValue());
 
-        operatorLog.compute();
-        Console.WriteLine(operatorLog.getValue());
+            operatorLog.compute();
+            Debug.WriteLine(operatorLog.getValue());
+        }
     }
+
 }

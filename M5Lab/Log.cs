@@ -1,12 +1,15 @@
-class Log : Operation
+namespace M5Lab
 {
-    public override void compute()
-    {   
-        value = Math.Log(value);
-    }
-
-    public override void compute(double x)
+    public class Log : Operation
     {
-        Console.WriteLine("Do not use for log");
+        public override void compute()
+        {   
+            value = Math.Log(value);
+        }
+
+        public override void compute(double x)
+        {
+            Console.WriteLine("Do not use for log");
+        }
     }
 }

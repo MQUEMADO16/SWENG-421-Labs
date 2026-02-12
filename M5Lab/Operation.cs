@@ -1,13 +1,16 @@
-﻿abstract class Operation: OperationIF
-{   
-    protected static double value = 0;
+﻿namespace M5Lab
+{
+    public abstract class Operation: OperationIF
+    {   
+        protected static double value = 0;
 
-    public virtual void compute() {}
+        public virtual void compute() {}
 
-    public abstract void compute(double x);
+        public abstract void compute(double x);
 
-    public double getValue()
-    {
-        return value;
+        public double getValue()
+        {
+            return value;
+        }
     }
 }

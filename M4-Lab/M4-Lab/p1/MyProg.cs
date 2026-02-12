@@ -17,10 +17,8 @@ namespace M4_Lab.p1
             
             Company xyz = new Company();
             xyz.sortUtility = new SortUtilityProxy<ProductIF>("bubblesort");
-            Console.WriteLine(xyz.sortUtility.getName());
             xyz.sortUtility.sort(products1);
-            xyz.sortUtility = new SortUtility<ProductIF>("quicksort");
-            Console.WriteLine(xyz.sortUtility.getName());
+            xyz.sortUtility = new SortUtilityProxy<ProductIF>("quicksort");
             xyz.sortUtility.sort(products2);
         }
 

@@ -3,9 +3,13 @@ class Program
     public static void Main(string[] args)
     {
         OperationFactory myFactory = new OperationFactory();
-        OperationIF operator1 = myFactory.create("Sum");
+        OperationIF operatorAddition = myFactory.create("Sum");
+        OperationIF operatorLog = myFactory.create("Log");
 
-        operator1.compute(5);
-        Console.WriteLine(operator1.getValue());
+        operatorAddition.compute(5);
+        Console.WriteLine(operatorAddition.getValue());
+
+        operatorLog.compute();
+        Console.WriteLine(operatorLog.getValue());
     }
 }

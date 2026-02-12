@@ -1,6 +1,9 @@
 ﻿abstract class Operation: OperationIF
 {   
     protected static double value = 0;
+
+    public virtual void compute() {}
+
     public abstract void compute(double x);
 
     public double getValue()

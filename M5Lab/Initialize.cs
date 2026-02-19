@@ -1,7 +1,10 @@
-class Initialize : Operation
+namespace M5Lab
 {
-    public override void compute(double x)
+    public class Initialize : Operation
     {
-        value = x;
+        public override void compute(double x)
+        {
+            value = x;
+        }
     }
 }

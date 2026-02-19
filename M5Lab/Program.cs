@@ -1,15 +1,15 @@
-class Program
+using System.IO;
+
+namespace M5Lab
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        OperationFactory myFactory = new OperationFactory();
-        OperationIF operatorAddition = myFactory.create("Sum");
-        OperationIF operatorLog = myFactory.create("Log");
-
-        operatorAddition.compute(5);
-        Console.WriteLine(operatorAddition.getValue());
-
-        operatorLog.compute();
-        Console.WriteLine(operatorLog.getValue());
+        [STAThread]
+        public static void Main(string[] args)
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+        }
     }
 }

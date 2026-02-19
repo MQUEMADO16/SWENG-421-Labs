@@ -1,7 +1,10 @@
-class Sum : Operation
+namespace M5Lab
 {
-    public override void compute(double x)
-    {   
-        value += x;
+    public class Sum : Operation
+    {
+        public override void compute(double x)
+        {   
+            value += x;
+        }
     }
 }

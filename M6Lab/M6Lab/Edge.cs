@@ -22,5 +22,13 @@ namespace M6Lab
         {
             // TODO
         }
+
+        public Edge copy()
+        {
+            Edge copyEdge = new Edge();
+            copyEdge.edge_ID = edge_ID + 1;
+            copyEdge.from_vertex = from_vertex.copy();
+            copyEdge.to_vertex = to_vertex.copy();
+        }
     }
 }

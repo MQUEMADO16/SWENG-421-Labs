@@ -21,5 +21,24 @@ namespace M6Lab
         {
             // TODO
         }
+
+        public Graph copy()
+        {
+            Graph copyGraph = new Graph(ID + 1);
+            copyGraph.vertices = new ArrayList();
+            copyGraph.edges = new ArrayList();
+
+            foreach(Vertex vertex in vertices)
+            {
+                copyGraph.vertices.Add(vertex.copy());
+            }
+
+            foreach(Edge edge in edges)
+            {
+                copyGraph.edges.Add(edge.copy());
+            }
+
+            return copyGraph;
+        }
     }
 }

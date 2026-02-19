@@ -24,15 +24,12 @@ namespace M6Lab
 
         public Graph createGraph()
         {
-            int id = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
-
-            return new Graph(id);
+            return new Graph();
         }
 
         public Graph copyGraph(Graph graph)
         {
-            // TODO
-            return new Graph(1);
+            return graph.copy();
         }
     }
 }

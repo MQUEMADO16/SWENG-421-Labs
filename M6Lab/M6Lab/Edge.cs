@@ -29,6 +29,8 @@ namespace M6Lab
             copyEdge.edge_ID = edge_ID + 1;
             copyEdge.from_vertex = from_vertex.copy();
             copyEdge.to_vertex = to_vertex.copy();
+
+            return copyEdge;
         }
     }
 }

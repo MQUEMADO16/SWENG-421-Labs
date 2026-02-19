@@ -9,12 +9,12 @@ namespace M6Lab
 {
     internal class Graph
     {   
-        private int ID { get; }
-        public ArrayList vertices = new ArrayList();
-        public ArrayList edges = new ArrayList();
+        private Guid ID { get; }
+        public List<Vertex> vertices = new List<Vertex>();
+        public List<Edge> edges = new List<Edge>();
 
-        public Graph(int ID) {
-            this.ID = ID;
+        public Graph() {
+            this.ID = Guid.NewGuid();
         }
 
         public void display()
@@ -24,9 +24,9 @@ namespace M6Lab
 
         public Graph copy()
         {
-            Graph copyGraph = new Graph(ID + 1);
-            copyGraph.vertices = new ArrayList();
-            copyGraph.edges = new ArrayList();
+            Graph copyGraph = new Graph();
+            copyGraph.vertices = new List<Vertex>();
+            copyGraph.edges = new List<Edge>();
 
             foreach(Vertex vertex in vertices)
             {

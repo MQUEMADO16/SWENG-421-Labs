@@ -18,9 +18,9 @@ namespace M6Lab
             to_vertex = new Vertex();
         }
 
-        public void drawing()
+        public void drawing(Form form)
         {
-            // TODO
+            
         }
 
         public Edge copy()

@@ -17,9 +17,17 @@ namespace M6Lab
             this.ID = Guid.NewGuid();
         }
 
-        public void display()
+        public void display(Form form)
         {
-            // TODO
+            foreach(Vertex vertex in vertices)
+            {
+                vertex.drawing(form);
+            }
+
+            foreach(Edge edge in edges)
+            {
+                edge.drawing(form);
+            }
         }
 
         public Graph copy()

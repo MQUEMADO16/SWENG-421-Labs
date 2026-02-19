@@ -14,7 +14,7 @@ namespace M6Lab
             
         public Vertex() { }
 
-        public void drawing()
+        public void drawing(Form form)
         {
             // TODO
         }

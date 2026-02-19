@@ -18,5 +18,15 @@ namespace M6Lab
         {
             // TODO
         }
+
+        public Vertex copy()
+        {
+            Vertex copyVertex = new Vertex();
+            copyVertex.vertex_ID = vertex_ID + 1;
+            copyVertex.x_coordinate = x_coordinate;
+            copyVertex.y_coordinate = y_coordinate;
+
+            return copyVertex;
+        }
     }
 }

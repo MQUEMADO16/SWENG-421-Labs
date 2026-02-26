@@ -9,24 +9,24 @@ namespace M6Lab
 {
     internal class Graph
     {   
-        private Guid ID { get; }
+        public Guid ID { get; }
         public List<Vertex> vertices = new List<Vertex>();
         public List<Edge> edges = new List<Edge>();
 
         public Graph() {
-            this.ID = Guid.NewGuid();
+            ID = Guid.NewGuid();
         }
 
-        public void display(Form form)
+        public void display(Panel panel)
         {
             foreach(Vertex vertex in vertices)
             {
-                vertex.drawing(form);
+                vertex.drawing(panel);
             }
 
             foreach(Edge edge in edges)
             {
-                edge.drawing(form);
+                edge.drawing(panel);
             }
         }
 

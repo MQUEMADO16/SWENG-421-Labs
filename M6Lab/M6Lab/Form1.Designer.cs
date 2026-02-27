@@ -34,41 +34,42 @@
             createGraphButton = new Button();
             graphComboBox = new ComboBox();
             copySelectedGraphButton = new Button();
-            displayButton = new Button();
             label1 = new Label();
+            modifyVertexButton = new Button();
+            modifyEdgeButton = new Button();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = SystemColors.ControlLightLight;
-            panel1.Location = new Point(184, 55);
+            panel1.Location = new Point(12, 55);
             panel1.Name = "panel1";
             panel1.Size = new Size(604, 383);
             panel1.TabIndex = 0;
             // 
             // addVertexButton
             // 
-            addVertexButton.Location = new Point(38, 80);
+            addVertexButton.Location = new Point(641, 148);
             addVertexButton.Name = "addVertexButton";
-            addVertexButton.Size = new Size(75, 23);
+            addVertexButton.Size = new Size(138, 23);
             addVertexButton.TabIndex = 2;
-            addVertexButton.Text = "Add Vertex";
+            addVertexButton.Text = "Add Random Vertex";
             addVertexButton.UseVisualStyleBackColor = true;
             addVertexButton.Click += addVertexClick;
             // 
             // addEdgeButton
             // 
-            addEdgeButton.Location = new Point(38, 109);
+            addEdgeButton.Location = new Point(641, 188);
             addEdgeButton.Name = "addEdgeButton";
-            addEdgeButton.Size = new Size(75, 23);
+            addEdgeButton.Size = new Size(138, 23);
             addEdgeButton.TabIndex = 3;
-            addEdgeButton.Text = "Add Edge";
+            addEdgeButton.Text = "Add Random Edge";
             addEdgeButton.UseVisualStyleBackColor = true;
             addEdgeButton.Click += addEdgeClick;
             // 
             // createGraphButton
             // 
-            createGraphButton.Location = new Point(356, 12);
+            createGraphButton.Location = new Point(397, 11);
             createGraphButton.Name = "createGraphButton";
             createGraphButton.Size = new Size(87, 23);
             createGraphButton.TabIndex = 4;
@@ -81,29 +82,19 @@
             graphComboBox.FormattingEnabled = true;
             graphComboBox.Location = new Point(63, 12);
             graphComboBox.Name = "graphComboBox";
-            graphComboBox.Size = new Size(267, 23);
+            graphComboBox.Size = new Size(312, 23);
             graphComboBox.TabIndex = 5;
             graphComboBox.SelectedIndexChanged += graphComboBox_SelectedIndexChanged;
             // 
             // copySelectedGraphButton
             // 
-            copySelectedGraphButton.Location = new Point(449, 12);
+            copySelectedGraphButton.Location = new Point(490, 11);
             copySelectedGraphButton.Name = "copySelectedGraphButton";
             copySelectedGraphButton.Size = new Size(126, 23);
             copySelectedGraphButton.TabIndex = 6;
             copySelectedGraphButton.Text = "Copy Selected Graph";
             copySelectedGraphButton.UseVisualStyleBackColor = true;
             copySelectedGraphButton.Click += copySelectedGraphClick;
-            // 
-            // displayButton
-            // 
-            displayButton.Location = new Point(581, 12);
-            displayButton.Name = "displayButton";
-            displayButton.Size = new Size(155, 23);
-            displayButton.TabIndex = 7;
-            displayButton.Text = "Display Selected Graph";
-            displayButton.UseVisualStyleBackColor = true;
-            displayButton.Click += displayButtonClick;
             // 
             // label1
             // 
@@ -114,18 +105,39 @@
             label1.TabIndex = 8;
             label1.Text = "Graph: ";
             // 
+            // modifyVertexButton
+            // 
+            modifyVertexButton.Location = new Point(641, 226);
+            modifyVertexButton.Name = "modifyVertexButton";
+            modifyVertexButton.Size = new Size(138, 23);
+            modifyVertexButton.TabIndex = 9;
+            modifyVertexButton.Text = "Modify Random Vertex";
+            modifyVertexButton.UseVisualStyleBackColor = true;
+            modifyVertexButton.Click += modifyVertexClick;
+            // 
+            // modifyEdgeButton
+            // 
+            modifyEdgeButton.Location = new Point(641, 272);
+            modifyEdgeButton.Name = "modifyEdgeButton";
+            modifyEdgeButton.Size = new Size(138, 23);
+            modifyEdgeButton.TabIndex = 10;
+            modifyEdgeButton.Text = "Modify Random Edge";
+            modifyEdgeButton.UseVisualStyleBackColor = true;
+            modifyEdgeButton.Click += modifyEdgeClick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(modifyEdgeButton);
             Controls.Add(label1);
-            Controls.Add(displayButton);
+            Controls.Add(addVertexButton);
+            Controls.Add(modifyVertexButton);
+            Controls.Add(addEdgeButton);
             Controls.Add(copySelectedGraphButton);
             Controls.Add(graphComboBox);
             Controls.Add(createGraphButton);
-            Controls.Add(addEdgeButton);
-            Controls.Add(addVertexButton);
             Controls.Add(panel1);
             Name = "Form1";
             Text = "Form1";
@@ -141,7 +153,8 @@
         private Button createGraphButton;
         private ComboBox graphComboBox;
         private Button copySelectedGraphButton;
-        private Button displayButton;
         private Label label1;
+        private Button modifyVertexButton;
+        private Button modifyEdgeButton;
     }
 }

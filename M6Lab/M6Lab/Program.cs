@@ -8,9 +8,11 @@ namespace M6Lab
         [STAThread]
         static void Main()
         {
+            SharedGraphState sharedState = new SharedGraphState();
+
             ApplicationConfiguration.Initialize();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MultiFormContext(new Form1(), new Form1()));
+            Application.Run(new MultiFormContext(new Form1(sharedState), new Form1(sharedState)));
         }
     }
 }

@@ -17,22 +17,55 @@ namespace M6Lab
             return grapher;
         }
 
-        public void display()
-        {
-            // TODO
-        }
-
         public Graph createGraph()
         {
-            int id = (int)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalSeconds;
+            return new Graph();
+        }
 
-            return new Graph(id);
+        public void addVertex(Graph graph, int x, int y)
+        {
+            Vertex vertex = new Vertex();
+            vertex.vertex_ID = new Guid();
+            vertex.x_coordinate = x;
+            vertex.y_coordinate = y;
+            graph.vertices.Add(vertex);
+        }
+
+        public void addEdge(Graph graph)
+        {
+            if (graph.vertices.Count < 2)
+            {
+                throw new InvalidOperationException("At least two vertices are required to add an edge.");
+            }
+
+            Edge edge = new Edge();
+            edge.edge_ID = new Guid();
+
+            // Randomly choose two different vertices from the graph to connect with the edge
+            int to_vertex_index = new Random().Next(graph.vertices.Count);
+            int from_vertex_index = to_vertex_index > 0 ? to_vertex_index - 1 : to_vertex_index + 1;
+
+            edge.from_vertex = graph.vertices[from_vertex_index];
+            edge.to_vertex = graph.vertices[to_vertex_index];
+
+            graph.edges.Add(edge);
+        }
+
+        public void modifyVertex(Vertex vertex, int x_coordinate, int y_coordinate)
+        {
+            vertex.x_coordinate = x_coordinate;
+            vertex.y_coordinate = y_coordinate;
+        }
+
+        public void modifyEdge(Edge edge, Vertex from_vertex, Vertex to_vertex)
+        {
+            edge.from_vertex = from_vertex;
+            edge.to_vertex = to_vertex;
         }
 
         public Graph copyGraph(Graph graph)
         {
-            // TODO
-            return new Graph(1);
+            return graph.copy();
         }
     }
 }

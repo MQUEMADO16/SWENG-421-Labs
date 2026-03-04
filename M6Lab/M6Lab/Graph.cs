@@ -9,24 +9,32 @@ namespace M6Lab
 {
     internal class Graph
     {   
-        private int ID { get; }
-        public ArrayList vertices = new ArrayList();
-        public ArrayList edges = new ArrayList();
+        public Guid ID { get; }
+        public List<Vertex> vertices = new List<Vertex>();
+        public List<Edge> edges = new List<Edge>();
 
-        public Graph(int ID) {
-            this.ID = ID;
+        public Graph() {
+            ID = Guid.NewGuid();
         }
 
-        public void display()
+        public void display(Panel panel)
         {
-            // TODO
+            foreach(Vertex vertex in vertices)
+            {
+                vertex.drawing(panel);
+            }
+
+            foreach(Edge edge in edges)
+            {
+                edge.drawing(panel);
+            }
         }
 
         public Graph copy()
         {
-            Graph copyGraph = new Graph(ID + 1);
-            copyGraph.vertices = new ArrayList();
-            copyGraph.edges = new ArrayList();
+            Graph copyGraph = new Graph();
+            copyGraph.vertices = new List<Vertex>();
+            copyGraph.edges = new List<Edge>();
 
             foreach(Vertex vertex in vertices)
             {

@@ -8,10 +8,11 @@ namespace M6Lab
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            SharedGraphState sharedState = new SharedGraphState();
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MultiFormContext(new Form1(sharedState), new Form1(sharedState)));
         }
     }
 }

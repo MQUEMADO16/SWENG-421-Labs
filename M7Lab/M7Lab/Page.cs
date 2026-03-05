@@ -8,7 +8,8 @@ namespace M7Lab
 {
     internal class Page : NovelContentIF
     {
-        public List<PageContentIF> content = new List<PageContentIF>();
+        public List<PageContentIF> _content = new List<PageContentIF>();
+        public List<PageContentIF> content { get { return _content; } } 
         public Page() { }
 
         public void save()

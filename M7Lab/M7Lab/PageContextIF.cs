@@ -8,6 +8,7 @@ namespace M7Lab
 {
     internal interface PageContentIF
     {
+
         public void save();
         public void retrieve();
         public void view();

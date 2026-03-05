@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal interface ColumnIF
+    internal class Page
     {
-        public void view();
+        public Page() { }
     }
 }

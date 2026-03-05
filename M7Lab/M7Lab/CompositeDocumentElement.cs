@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class ColumnIF
+    internal class CompositeDocumentElement : DocumentElementIF
     {
 
     }

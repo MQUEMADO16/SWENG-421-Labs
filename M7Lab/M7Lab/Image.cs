@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Image
+    internal class Image : DocumentElementIF
     {
         private string image;
 

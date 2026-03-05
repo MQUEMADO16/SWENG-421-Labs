@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Character : LineOfTextIF
+    internal class Character
     {
-        private string character;
+        private char character;
 
-        public Character(string character)
+        public Character(char character)
         {
             this.character = character;
         }
 
-        public void save(string character)
+        public void save(char character)
         {
             this.character = character;
             Console.WriteLine("Saved to character");
         }
 
-        public string retrieve()
+        public char retrieve()
         {
             Console.WriteLine("Retrieved from character");
             return character;
@@ -32,7 +32,7 @@ namespace M7Lab
             Console.Write(character);
         }
 
-        public void edit(string character)
+        public void edit(char character)
         {
             this.character = character;
             Console.WriteLine("Editted from character");
@@ -40,7 +40,7 @@ namespace M7Lab
 
         public void delete()
         {
-            character = "";
+            character = '\0';
 ;           Console.WriteLine("Deleted from character");
         }
     }

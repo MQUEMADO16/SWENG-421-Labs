@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class LineOfText
+    internal class LineOfText : ColumnIF
     {
-        private ArrayList content = new ArrayList();
+        private string content = "";
 
         public LineOfText() { }
 
-        public void save(LineOfTextIF obj)
+        public void save(string content)
         {
-            content.Add(obj);
+            this.content = content;
             Console.WriteLine("Saved to image");
         }
 

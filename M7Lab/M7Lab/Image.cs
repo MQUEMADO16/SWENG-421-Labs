@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Image : ColumnIF, LineOfTextIF
+    internal class Image
     {
         private string image;
 

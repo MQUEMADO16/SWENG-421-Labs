@@ -6,42 +6,35 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Character : DocumentElementIF
+    internal class Character : LineOfTextContentIF
     {
-        private char character;
+        public char character;
 
-        public Character(char character)
-        {
-            this.character = character;
-        }
+        public Character() {}
 
-        public void save(char character)
+        public void save()
         {
-            this.character = character;
             Console.WriteLine("Saved to character");
         }
 
-        public char retrieve()
+        public void retrieve()
         {
             Console.WriteLine("Retrieved from character");
-            return character;
         }
 
         public void view()
         {
-            Console.Write(character);
+            Console.WriteLine("Viewed from character");
         }
 
-        public void edit(char character)
+        public void edit()
         {
-            this.character = character;
             Console.WriteLine("Editted from character");
         }
 
         public void delete()
         {
-            character = '\0';
-;           Console.WriteLine("Deleted from character");
+            Console.WriteLine("Deleted from character");
         }
     }
 }

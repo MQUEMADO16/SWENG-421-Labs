@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal interface NovelIF
+    internal interface EditorIF
     {
-
+        public void view();
+        public void edit();
     }
 }

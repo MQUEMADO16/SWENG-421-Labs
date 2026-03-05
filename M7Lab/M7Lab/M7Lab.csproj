@@ -7,4 +7,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="NovelContentIF.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="NovelContentIF.cs" />
+    <None Include="LineOfTextContentIF.cs" />
+  </ItemGroup>
+
 </Project>

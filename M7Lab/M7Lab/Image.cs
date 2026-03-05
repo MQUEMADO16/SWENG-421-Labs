@@ -6,42 +6,35 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Image : DocumentElementIF
+    internal class Image : LineOfTextContentIF, FrameContentIF, ColumnContentIF
     {
-        private string image;
+        private string image = "";
 
-        public Image(string image)
-        {
-            this.image = image;
-        }
+        public Image() { }
 
-        public void save(string image)
+        public void save()
         {
-            this.image = image;
             Console.WriteLine("Saved to image");
         }
 
-        public string retrieve()
+        public void retrieve()
         {
             Console.WriteLine("Retrieved from image");
-            return image;
         }
 
         public void view()
         {
-            Console.WriteLine(image);
+            Console.WriteLine("Viewed from image");
         }
 
-        public void edit(string image)
+        public void edit()
         {
-            this.image = image;
             Console.WriteLine("Editted from image");
         }
 
         public void delete()
         {
-            image = ""
-;           Console.WriteLine("Deleted from image");
+            Console.WriteLine("Deleted from image");
         }
     }
 }

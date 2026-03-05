@@ -6,38 +6,34 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Column
+    internal class Column : PageContentIF
     {
-        private ArrayList content = new ArrayList();
+        public List<ColumnContentIF> content = new List<ColumnContentIF>();
 
         public Column() { }
 
-        // TODO
-        public void save(string image)
+        public void save()
         {
+            Console.WriteLine("Saved from column");
         }
 
-        public ArrayList retrieve()
+        public void retrieve()
         {
-            Console.WriteLine("Retrieved from Column");
-            return content;
+            Console.WriteLine("Retrieved from column");
         }
-
-        // TODO
         public void view()
         {
-
+            Console.WriteLine("Viewed from column");
         }
 
-        // TODO
-        public void edit(string image)
+        public void edit()
         {
+            Console.WriteLine("Editted from column");
         }
 
         public void delete()
         {
-            content.Clear();
-;           Console.WriteLine("Deleted from LineOfText");
+;           Console.WriteLine("Deleted from column");
         }
     }
 }

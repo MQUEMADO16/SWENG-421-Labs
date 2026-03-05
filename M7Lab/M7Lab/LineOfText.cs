@@ -6,33 +6,25 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class LineOfText : ColumnIF
+    internal class LineOfText : ColumnContentIF
     {
-        private string content = "";
+        public List<LineOfTextContentIF> content = new List<LineOfTextContentIF>();
 
         public LineOfText() { }
 
-        public void save(string content)
+        public void save()
         {
-            this.content = content;
             Console.WriteLine("Saved to image");
         }
 
-        public ArrayList retrieve()
+        public void retrieve()
         {
             Console.WriteLine("Retrieved from LineOfText");
-            return content;
         }
 
         public void view()
         {
-            foreach (LineOfTextIF obj in content)
-            {
-                obj.view();
-            }
-                
-            // End line of text  with line break
-            Console.WriteLine("\n");
+            Console.WriteLine("Viewed from LineOfText");
         }
 
         public void edit()
@@ -42,7 +34,6 @@ namespace M7Lab
 
         public void delete()
         {
-            content.Clear();
 ;           Console.WriteLine("Deleted from LineOfText");
         }
     }

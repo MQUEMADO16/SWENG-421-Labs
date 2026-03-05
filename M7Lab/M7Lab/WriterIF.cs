@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class CompositeDocumentElement : DocumentElementIF
+    internal class EditorIF
     {
-
     }
 }

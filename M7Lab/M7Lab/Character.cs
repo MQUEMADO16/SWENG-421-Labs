@@ -8,33 +8,36 @@ namespace M7Lab
 {
     internal class Character : LineOfTextContentIF
     {
-        public char character;
+        private char characterValue;
 
-        public Character() {}
+        public Character(char c)
+        {
+            this.characterValue = c;
+        }
 
         public void save()
         {
-            Console.WriteLine("Saved to character");
+            Console.WriteLine($"Char '{characterValue}' saved.");
         }
 
         public void retrieve()
         {
-            Console.WriteLine("Retrieved from character");
-        }
-
-        public void view()
-        {
-            Console.WriteLine("Viewed from character");
+            Console.WriteLine($"Char '{characterValue}' retrieved.");
         }
 
         public void edit()
         {
-            Console.WriteLine("Editted from character");
+            Console.WriteLine($"Char '{characterValue}' changed.");
         }
 
         public void delete()
         {
-            Console.WriteLine("Deleted from character");
+            Console.WriteLine($"Char '{characterValue}' deleted.");
+        }
+
+        public void view()
+        {
+            Console.Write(characterValue);
         }
     }
 }

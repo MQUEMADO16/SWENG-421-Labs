@@ -6,34 +6,37 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal class Novel
+    internal class Novel : AdministratorIF
     {
         public List<NovelContentIF> content = new List<NovelContentIF>();
-        public Novel() { }
 
         public void save()
         {
-            Console.WriteLine("Saved from novel");
+            Console.WriteLine("Novel saved successfully.");
+            foreach (var child in content) child.save();
         }
 
         public void retrieve()
         {
-            Console.WriteLine("Retrieved from novel");
-        }
-
-        public void view()
-        {
-            Console.WriteLine("Viewed from novel");
+            Console.WriteLine("Novel retrieved from archives.");
+            foreach (var child in content) child.retrieve();
         }
 
         public void edit()
         {
-            Console.WriteLine("Editted from novel");
+            Console.WriteLine("Novel edited.");
+            foreach (var child in content) child.edit();
         }
 
         public void delete()
         {
-            Console.WriteLine("Deleted from novel");
+            Console.WriteLine("Novel deleted completely.");
+            foreach (var child in content) child.delete();
+        }
+
+        public void view()
+        {
+            foreach (var child in content) child.view();
         }
     }
 }

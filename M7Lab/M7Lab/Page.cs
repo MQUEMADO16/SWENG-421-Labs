@@ -8,33 +8,35 @@ namespace M7Lab
 {
     internal class Page : NovelContentIF
     {
-        public List<PageContentIF> _content = new List<PageContentIF>();
-        public List<PageContentIF> content { get { return _content; } } 
-        public Page() { }
+        public List<PageContentIF> content = new List<PageContentIF>();
 
         public void save()
         {
-            Console.WriteLine("Saved from page");
+            Console.WriteLine("A page has been saved.");
+            foreach (var child in content) child.save();
         }
 
         public void retrieve()
         {
-            Console.WriteLine("Retrieved from page");
-        }
-
-        public void view()
-        {
-            Console.WriteLine("Viewed from page");
+            Console.WriteLine("A page has been retrieved.");
+            foreach (var child in content) child.retrieve();
         }
 
         public void edit()
         {
-            Console.WriteLine("Editted from page");
+            Console.WriteLine("A page has been updated.");
+            foreach (var child in content) child.edit();
         }
 
         public void delete()
         {
-            Console.WriteLine("Deleted from page");
+            Console.WriteLine("A page has been removed.");
+            foreach (var child in content) child.delete();
+        }
+
+        public void view()
+        {
+            foreach (var child in content) child.view();
         }
     }
 }

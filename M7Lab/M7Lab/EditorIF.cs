@@ -8,7 +8,8 @@ namespace M7Lab
 {
     internal interface EditorIF
     {
-        public void view();
-        public void edit();
+        public void save();
+        public void retrieve();
+        public void delete();
     }
 }

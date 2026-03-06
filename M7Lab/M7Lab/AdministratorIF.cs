@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace M7Lab
 {
-    internal interface WriterIF
+    internal interface AdministratorIF : WriterIF, EditorIF
     {
-        public void view();
-        public void edit();
     }
 }

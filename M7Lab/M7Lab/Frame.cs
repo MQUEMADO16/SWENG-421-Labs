@@ -9,31 +9,34 @@ namespace M7Lab
     internal class Frame : ColumnContentIF, PageContentIF
     {
         public List<FrameContentIF> content = new List<FrameContentIF>();
-        public Frame() { }
 
         public void save()
         {
-            Console.WriteLine("Saved from frame");
+            Console.WriteLine("Frame structure saved.");
+            foreach (var child in content) child.save();
         }
 
         public void retrieve()
         {
-            Console.WriteLine("Retrieved from frame");
-        }
-
-        public void view()
-        {
-            Console.WriteLine("Viewed from frame");
+            Console.WriteLine("Frame structure retrieved.");
+            foreach (var child in content) child.retrieve();
         }
 
         public void edit()
         {
-            Console.WriteLine("Editted from frame");
+            Console.WriteLine("Frame structure modified.");
+            foreach (var child in content) child.edit();
         }
 
         public void delete()
         {
-            ; Console.WriteLine("Deleted from frame");
+            Console.WriteLine("Frame structure destroyed.");
+            foreach (var child in content) child.delete();
+        }
+
+        public void view()
+        {
+            foreach (var child in content) child.view();
         }
     }
 }

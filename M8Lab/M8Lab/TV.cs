@@ -6,20 +6,36 @@ using System.Threading.Tasks;
 
 namespace M8Lab
 {
-    internal class TV
+    internal class TV : TV_IF
     {
-        private int MSRP;
-        private string Type;
-
-        public TV(int MSRP, string Type) {
-            this.MSRP = MSRP;
-            this.Type = Type;
-        }
+        private int MSRP = 200;
+        private string Type = "Regular";
 
         public TV replenish(string type, int budget)
         {   
-            // placeholder
-            return new SmartTV();
+            if (type == null)
+            {
+                if (budget >= 400) {
+                    return new UltraTV();
+                } else if (budget >= 300)
+                {
+                    return new SmartTV();
+                } else if (budget >= 200)
+                {
+                    return new TV();
+                }
+            } else if(type == "TV" && budget >= 200)
+            {
+                return new TV();
+            } else if(type == "Smart" && budget >=300)
+            {
+                return new SmartTV();    
+            } else if(type == "Ultra" && budget >= 400)
+            {
+                return new UltraTV();
+            }
+
+            return null;
         }
 
         public string getType()
@@ -39,9 +55,29 @@ namespace M8Lab
 
         protected class SmartTV : TV
         {
+            public SmartTV()
+            {
+                MSRP = 300;
+                Type = "Smart";
+            }
+
+            public string getPowerUsage()
+            {
+                return "5.5 watts/hour";
+            }
         }
         protected class UltraTV : TV
         {
+            public UltraTV()
+            {
+                MSRP = 400;
+                Type = "Ultra";
+            }
+
+            public string getResolution()
+            {
+                return "2K HD";
+            }
         }
     }
 }

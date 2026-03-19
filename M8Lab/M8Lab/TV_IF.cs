@@ -8,7 +8,7 @@ namespace M8Lab
 {
     internal interface TV_IF
     {
-        public TV replenish(string type, int budget);
-    }
+        public TV_IF replenish(string type, int budget);
+    }   
 }
     

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace M8Lab
 {
-    internal class TV : TV_IF
+    internal class TV
     {
         private int MSRP = 200;
         private string Type = "Regular";
@@ -38,7 +38,7 @@ namespace M8Lab
             return null;
         }
 
-        public string getType()
+        public string getType() 
         {
             return Type;
         }

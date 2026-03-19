@@ -7,8 +7,8 @@
             Buyer b = new Buyer();
             Customer c = new Customer();
             b.tv = new TV();
-            b.tv = b.tv.replenish(null, 600);
-            b.tv.getInfo();
+            b.tv = b.tv.replenish(null, 100);
+            Console.WriteLine(b.tv.getInfo());
         }
     }
 }

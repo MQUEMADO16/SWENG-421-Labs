@@ -24,7 +24,7 @@ namespace M8Lab
                 {
                     return new TV();
                 }
-            } else if(type == "TV" && budget >= 200)
+            } else if(type == "Regular" && budget >= 200)
             {
                 return new TV();
             } else if(type == "Smart" && budget >=300)
@@ -48,7 +48,7 @@ namespace M8Lab
             return MSRP;
         }
 
-        public string getInfo()
+        public virtual string getInfo()
         {
             return "Type: " + getType() + " | Price: " + getPrice();
         }
@@ -65,6 +65,11 @@ namespace M8Lab
             {
                 return "5.5 watts/hour";
             }
+
+            public override string getInfo()
+            {
+                return "Type: " + getType() + " | Price: " + getPrice() + " | Power Usage: " + getPowerUsage();
+            }
         }
         protected class UltraTV : TV
         {
@@ -77,6 +82,11 @@ namespace M8Lab
             public string getResolution()
             {
                 return "2K HD";
+            }
+
+            public override string getInfo()
+            {
+                return "Type: " + getType() + " | Price: " + getPrice() + " | Resolution: " + getResolution();
             }
         }
     }

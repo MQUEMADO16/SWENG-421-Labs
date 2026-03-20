@@ -6,41 +6,41 @@ using System.Threading.Tasks;
 
 namespace M8Lab
 {
-    internal class SonyTV : TV_IF
+    internal class LGTV : TV_IF
     {
-        private int MSRP = 280;
+        private int MSRP = 250;
         private string Type = "Regular";
-        private static string Brand = "Sony";
+        private static string Brand = "LG";
 
 
         public TV_IF replenish(string type, int budget)
         {
             if (type == null)
             {
-                if (budget >= 480)
+                if (budget >= 450)
                 {
-                    return new SonyUltraTV();
+                    return new LGUltraTV();
                 }
-                else if (budget >= 380)
+                else if (budget >= 350)
                 {
-                    return new SonySmartTV();
+                    return new LGSmartTV();
                 }
-                else if (budget >= 280)
+                else if (budget >= 250)
                 {
-                    return new SonyTV();
+                    return new LGTV();
                 }
             }
-            else if (type == "Regular" && budget >= 280)
+            else if (type == "Regular" && budget >= 250)
             {
-                return new SonyTV();
+                return new LGTV();
             }
-            else if (type == "Smart" && budget >= 380)
+            else if (type == "Smart" && budget >= 350)
             {
-                return new SonySmartTV();
+                return new LGSmartTV();
             }
-            else if (type == "Ultra" && budget >= 480)
+            else if (type == "Ultra" && budget >= 450)
             {
-                return new SonyUltraTV();
+                return new LGUltraTV();
             }
 
             return null;
@@ -61,41 +61,38 @@ namespace M8Lab
             return Brand;
         }
 
+      
         public virtual string getInfo()
         {
             return "Type: " + getType() + " | Price: " + getPrice() + " | Brand: " + getBrand();
         }
 
-        protected class SonySmartTV : SonyTV, SmartTV_IF
+        protected class LGSmartTV : LGTV, SmartTV_IF
         {
-            public SonySmartTV()
+            public LGSmartTV()
             {
-                MSRP = 300;
+                MSRP = 350;
                 Type = "Smart";
             }
-
             public string getPowerUsage()
             {
-                return "5.35 watts/hour";
+                return "6.35 watts/hour";
             }
             public override string getInfo()
             {
                 return base.getInfo() + " | Power Usage: " + getPowerUsage();
             }
-
-
         }
-        protected class SonyUltraTV : SonyTV, UltraHDTV_IF
+        protected class LGUltraTV : LGTV, UltraHDTV_IF
         {
-            public SonyUltraTV()
+            public LGUltraTV()
             {
                 MSRP = 450;
                 Type = "Ultra";
             }
-            public string getResolution()
-            {
-                return "4k HD";
-            }
+
+            public string getResolution() => "4k HD";
+
             public override string getInfo()
             {
                 return base.getInfo() + " | Resolution: " + getResolution();

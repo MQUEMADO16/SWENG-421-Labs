@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace M8Lab
 {
-    internal interface TV_IF
+    internal interface UltraHDTV_IF : TV_IF
     {
-        public TV_IF replenish(string type, int budget);
-        public string getInfo();
-    }   
+        public string getResolution();
+
+    }
 }
-    
+

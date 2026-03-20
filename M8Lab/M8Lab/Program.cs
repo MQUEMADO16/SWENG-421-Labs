@@ -15,7 +15,16 @@
             }
 
             b.tv = new TV();
-            b.tv = b.tv.replenish(null, 310);
+            b.tv = b.tv.replenish(null, 350);
+
+            if (b.tv != null)
+            {
+                Console.WriteLine(b.tv.getInfo());
+            }
+
+            b.tv = new TV();
+            b.tv = b.tv.replenish("TV", 500);
+       
 
             if (b.tv != null)
             {

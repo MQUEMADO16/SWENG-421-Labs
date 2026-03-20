@@ -9,7 +9,7 @@ namespace M8Lab
     internal class SonyTV : TV_IF
     {
         private int MSRP = 280;
-        private string Type = "Regular";
+        private string Type = "TV";
         private static string Brand = "Sony";
 
 
@@ -30,15 +30,15 @@ namespace M8Lab
                     return new SonyTV();
                 }
             }
-            else if (type == "Regular" && budget >= 280)
+            else if (type == "TV" && budget >= 280)
             {
                 return new SonyTV();
             }
-            else if (type == "Smart" && budget >= 380)
+            else if (type == "Smart_TV" && budget >= 380)
             {
                 return new SonySmartTV();
             }
-            else if (type == "Ultra" && budget >= 480)
+            else if (type == "UltraHD_TV" && budget >= 480)
             {
                 return new SonyUltraTV();
             }
@@ -71,7 +71,7 @@ namespace M8Lab
             public SonySmartTV()
             {
                 MSRP = 300;
-                Type = "Smart";
+                Type = "Smart_TV";
             }
 
             public string getPowerUsage()
@@ -90,7 +90,7 @@ namespace M8Lab
             public SonyUltraTV()
             {
                 MSRP = 450;
-                Type = "Ultra";
+                Type = "UltraHD_TV";
             }
             public string getResolution()
             {

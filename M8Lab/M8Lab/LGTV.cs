@@ -9,7 +9,7 @@ namespace M8Lab
     internal class LGTV : TV_IF
     {
         private int MSRP = 250;
-        private string Type = "Regular";
+        private string Type = "TV";
         private static string Brand = "LG";
 
 
@@ -30,15 +30,15 @@ namespace M8Lab
                     return new LGTV();
                 }
             }
-            else if (type == "Regular" && budget >= 250)
+            else if (type == "TV" && budget >= 250)
             {
                 return new LGTV();
             }
-            else if (type == "Smart" && budget >= 350)
+            else if (type == "Smart_TV" && budget >= 350)
             {
                 return new LGSmartTV();
             }
-            else if (type == "Ultra" && budget >= 450)
+            else if (type == "UltraHD_TV" && budget >= 450)
             {
                 return new LGUltraTV();
             }
@@ -72,7 +72,7 @@ namespace M8Lab
             public LGSmartTV()
             {
                 MSRP = 350;
-                Type = "Smart";
+                Type = "Smart_TV";
             }
             public string getPowerUsage()
             {
@@ -88,7 +88,7 @@ namespace M8Lab
             public LGUltraTV()
             {
                 MSRP = 450;
-                Type = "Ultra";
+                Type = "UltraHD_TV";
             }
 
             public string getResolution() => "4k HD";

@@ -9,7 +9,7 @@ namespace M8Lab
     internal class TV
     {
         private int MSRP = 200;
-        private string Type = "Regular";
+        private string Type = "TV";
 
         public TV replenish(string type, int budget)
         {   
@@ -24,13 +24,13 @@ namespace M8Lab
                 {
                     return new TV();
                 }
-            } else if(type == "Regular" && budget >= 200)
+            } else if(type == "TV" && budget >= 200)
             {
                 return new TV();
-            } else if(type == "Smart" && budget >=300)
+            } else if(type == "Smart_TV" && budget >=300)
             {
                 return new SmartTV();    
-            } else if(type == "Ultra" && budget >= 400)
+            } else if(type == "UltraHD_TV" && budget >= 400)
             {
                 return new UltraTV();
             }
@@ -58,7 +58,7 @@ namespace M8Lab
             public SmartTV()
             {
                 MSRP = 300;
-                Type = "Smart";
+                Type = "Smart_TV";
             }
 
             public string getPowerUsage()
@@ -76,7 +76,7 @@ namespace M8Lab
             public UltraTV()
             {
                 MSRP = 400;
-                Type = "Ultra";
+                Type = "UltraHD_TV";
             }
 
             public string getResolution()

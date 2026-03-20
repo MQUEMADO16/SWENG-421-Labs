@@ -37,6 +37,12 @@
             if (b.tv != null) {
                 Console.WriteLine(b.tv.getInfo());
             }
+            b.tv = b.tv.replenish(null, 130);
+
+            if (b.tv != null)
+            {
+                Console.WriteLine(b.tv.getInfo());
+            }
 
             c.tvif =  new SonyTV();
             c.tvif = c.tvif.replenish(null, 556);
@@ -67,6 +73,11 @@
             }
             c.tvif = new LGTV();
             c.tvif = c.tvif.replenish(null, 600);
+            if (c.tvif != null)
+            {
+                Console.WriteLine(c.tvif.getInfo());
+            }
+            c.tvif = c.tvif.replenish(null, 100);
             if (c.tvif != null)
             {
                 Console.WriteLine(c.tvif.getInfo());

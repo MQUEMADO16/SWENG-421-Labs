@@ -44,9 +44,8 @@ namespace M9_Lab
                 case "Cappuccino":
                     this.pif = new CappuccinoProg();
                     return pif;
-                // TODO Need custom (decorator?) case
                 default:
-                    this.pif = new RegularProg();
+                    this.pif = new USBProg();
                     return pif;
             }
         }

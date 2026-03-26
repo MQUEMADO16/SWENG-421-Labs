@@ -13,6 +13,13 @@ namespace M9_Lab
             mochaProg.setMachine(machine);
             machine.runProgram();
             Console.WriteLine("Mocha is priced at: " + machine.computePrice());
+
+            CoffeeIF espresso = new Espresso(1, 1, 2);
+            machine.setCoffee(espresso);
+            ProgramIF espressoProg = machine.setProgram("Espresso");
+            espressoProg.setMachine(machine);
+            machine.runProgram();
+            Console.WriteLine("Espresso is priced at: " + machine.computePrice());
         }
     }
 }

@@ -8,10 +8,10 @@ namespace M10Lab
 {
     internal enum EmployeeRank
     {
-        Worker,
-        Supervisor,
-        ProjectLeader,
-        Manager,
-        Ceo,
+        Worker = 1,
+        Supervisor = 2,
+        ProjectLeader = 2,
+        Manager = 3,
+        Ceo = 4,
     }
 }

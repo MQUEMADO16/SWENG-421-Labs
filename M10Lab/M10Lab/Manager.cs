@@ -23,7 +23,7 @@ namespace M10Lab
 
         public void contactBoss()
         {
-            superior.seeDanger();
+            Superior.seeDanger();
         }
 
         public Decision suggestedDecision()

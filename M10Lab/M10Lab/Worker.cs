@@ -9,15 +9,14 @@ namespace M10Lab
 {
     internal class Worker : EmployeeBase
     {
-        public Worker(string name, EmployeeRank rank)
-        {
-            this.name = name;
-            this.rank = rank;
-        }
+        public Worker(string name, EmployeeRank rank) : base(name, rank) { }
 
         public override void seeDanger()
         {
-            superior.seeDanger();
+            if (superior != null)
+            {
+                superior.seeDanger();
+            }
         }
     }
 }

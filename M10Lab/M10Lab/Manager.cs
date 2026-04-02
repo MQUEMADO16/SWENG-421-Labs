@@ -9,11 +9,7 @@ namespace M10Lab
 {
     internal class Manager : EmployeeBase
     {
-        public Manager(string name, EmployeeRank rank)
-        {
-            this.name = name;
-            this.rank = rank;
-        }
+        public Manager(string name, EmployeeRank rank) : base(name, rank) { }
 
         public override void seeDanger()
         {
@@ -23,7 +19,11 @@ namespace M10Lab
 
         public void contactBoss()
         {
-            Superior.seeDanger();
+            if(superior != null)
+            {
+                superior.seeDanger();
+            }
+            
         }
 
         public Decision suggestedDecision()

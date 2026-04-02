@@ -9,11 +9,7 @@ namespace M10Lab
 {
     internal class Supervisor : EmployeeBase
     {
-        public Supervisor(string name, EmployeeRank rank)
-        {
-            this.name = name;
-            this.rank = rank;
-        }
+        public Supervisor(string name, EmployeeRank rank) : base(name, rank) { }
 
         public override void seeDanger()
         {
@@ -22,7 +18,10 @@ namespace M10Lab
                 subordinate.fixIt();
             }
 
-            superior.seeDanger();
+            if (superior != null)
+            {
+                superior.seeDanger();
+            }
         }
     }
 }

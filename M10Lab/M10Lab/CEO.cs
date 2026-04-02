@@ -8,19 +8,31 @@ using System.Transactions;
 namespace M10Lab
 {
     internal class CEO : EmployeeBase
-    {   
-        public CEO(string name, EmployeeRank rank)
-        {
-            this.name = name;
-            this.rank = rank;
-        }
+    {
+        public CEO(string name, EmployeeRank rank) : base(name, rank) { }
 
         public override void seeDanger()
         {
-            foreach(IEmployee subordinate in subordinates)
+            List<Decision> decisions = new List<Decision>();
+
+            foreach (IEmployee subordinate in subordinates)
             {
-                // subordinate.suggestedDecision();
+                decisions.Add(((Manager)subordinate).suggestedDecision());
             }
+
+            Decision action = grant(decisions);
+
+            if (action != null)
+            {
+                action.doIt();
+            }
+
+            evacuate();
+        }
+
+        public Decision grant(List<Decision> decisions)
+        {
+            return decisions[0];
         }
     }
 }

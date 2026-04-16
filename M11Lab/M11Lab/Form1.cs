@@ -207,5 +207,21 @@ namespace M11Lab
             Calculator.lastOperator = null;
             update_display();
         }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            // . BUTTON
+
+            if (Calculator.state.GetType() == typeof(DigitOneState))
+            {
+                Calculator.num1 = Calculator.num1 / 10;
+            }
+            else if (Calculator.state.GetType() == typeof(DigitTwoState))
+            {
+                Calculator.num2 = Calculator.num2 / 10;
+            }
+
+            update_display();
+        }
     }
 }

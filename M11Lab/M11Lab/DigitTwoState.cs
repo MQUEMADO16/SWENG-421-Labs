@@ -11,11 +11,13 @@ namespace M11Lab
     {
         public override void nextState(double num)
         {
+            // STAY IN DIGIT TWO STATE
             Calculator.num2 = Calculator.num2 * 10 + num;
         }
 
         public override void nextState(Operator operation)
-        {
+        {   
+            // SWITCH TO OPERATOR STATE
             double result = Calculator.operation.calc(Calculator.num1, Calculator.num2);
             Calculator.num1 = result;
             Calculator.num2 = 0;
@@ -26,7 +28,8 @@ namespace M11Lab
         }
 
         public override void nextState(Equals equal)
-        {
+        {   
+            // SWITCH TO EQUAL STATE
             double result = Calculator.operation.calc(Calculator.num1, Calculator.num2);
             Calculator.num1 = result;
             Calculator.lastOperand = Calculator.num2;

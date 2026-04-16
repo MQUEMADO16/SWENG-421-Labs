@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace M11Lab
+﻿namespace M11Lab
 {
-    internal abstract class CalculatorState
+    internal class CalculatorState
     {
-        public static Calculator calculator;
-        public double num1;
-        public double num2;
-        public Operator operation;
 
-        public void nextOperation(Operator operation)
-        {
-            this.operation = operation;
-        }
+        public virtual void nextState(double num) { }
+        public virtual void nextState(Operator op) { }
+        public virtual void nextState(Equals eq) { }
     }
 }

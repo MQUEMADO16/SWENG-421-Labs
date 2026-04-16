@@ -12,6 +12,7 @@ namespace M11Lab
         public double calc(double num1, double num2, Operator operation)
         {
             result = operation.calc(num1, num2);
+            Console.WriteLine(result);
             return result;
         }
     }

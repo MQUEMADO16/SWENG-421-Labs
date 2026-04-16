@@ -16,11 +16,17 @@ namespace M11Lab
         public override void nextState(Operator operation)
         {
             Calculator.operation = operation;
+            Calculator.lastOperator = operation;
         }
 
         public override void nextState(Equals equals)
         {
-            // no implementation neccessary since we still need num 2
+            Calculator.num2 = Calculator.lastOperand;
+            double result = equals.calc(Calculator.num1, Calculator.num2, Calculator.operation);
+            Calculator.num1 = result;
+            Calculator.lastOperand = Calculator.num2;
+            Calculator.state = new EqualState();
+
         }
     }
 }

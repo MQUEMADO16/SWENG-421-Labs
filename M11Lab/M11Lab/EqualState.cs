@@ -22,7 +22,13 @@ namespace M11Lab
         }
         public override void nextState(Equals equal)
         {
-            // we are already on equals state
+            double result = Calculator.operation.calc(
+                Calculator.num1,
+                Calculator.lastOperand
+            );
+
+            Calculator.num1 = result;
+            equal.result = result;
         }
     }
 }

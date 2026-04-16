@@ -17,6 +17,8 @@ namespace M11Lab
         public override void nextState(Operator operation)
         {
             Calculator.operation = operation;
+            Calculator.lastOperator = operation;
+            Calculator.lastOperand = Calculator.num1;
             Calculator.state = new OperatorState();
         }
 

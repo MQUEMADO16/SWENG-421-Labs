@@ -150,5 +150,62 @@ namespace M11Lab
         {
 
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            // TAKE NEGATIVE BUTTON
+            if (Calculator.state.GetType() == typeof(DigitOneState))
+            {
+                Calculator.num1 = Calculator.num1 * -1;
+            }
+            else if (Calculator.state.GetType() == typeof(DigitTwoState))
+            {
+                Calculator.num2 = Calculator.num2 * -1;
+            }
+
+            update_display();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            // 1/X BUTTON
+            if (Calculator.state.GetType() == typeof(DigitOneState))
+            {
+                Calculator.num1 = 1 / Calculator.num1;
+            }
+            else if (Calculator.state.GetType() == typeof(DigitTwoState))
+            {
+                Calculator.num2 = 1 / Calculator.num2;
+            }
+
+            update_display();
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            // SQRT BUTTON
+
+            if (Calculator.state.GetType() == typeof(DigitOneState))
+            {
+                Calculator.num1 = Math.Sqrt(Calculator.num1);
+            }
+            else if (Calculator.state.GetType() == typeof(DigitTwoState))
+            {
+                Calculator.num2 = Math.Sqrt(Calculator.num2);
+            }
+
+            update_display();
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            // CLEAR BUTTON
+            Calculator.num1 = 0;
+            Calculator.num2 = 0;
+            Calculator.state = new DigitOneState();
+            Calculator.lastOperand = 0;
+            Calculator.lastOperator = null;
+            update_display();
+        }
     }
 }

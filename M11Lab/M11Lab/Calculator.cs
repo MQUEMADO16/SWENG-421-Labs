@@ -9,7 +9,8 @@ namespace M11Lab
     internal class Calculator
     {
         public static CalculatorState state;
-
+        public static double lastOperand;
+        public static Operator lastOperator;
         public static double num1;
         public static double num2;
         public static Operator operation;

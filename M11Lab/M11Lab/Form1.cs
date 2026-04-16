@@ -32,7 +32,7 @@ namespace M11Lab
                 calctext.Text = Calculator.num2.ToString();
             } else if(Calculator.state.GetType() == typeof(EqualState))
             {
-                calctext.Text = eq.result.ToString();
+                calctext.Text = Calculator.num1.ToString();
             }
         }
 
@@ -154,7 +154,7 @@ namespace M11Lab
         private void button16_Click(object sender, EventArgs e)
         {
             // TAKE NEGATIVE BUTTON
-            if (Calculator.state.GetType() == typeof(DigitOneState))
+            if (Calculator.state.GetType() == typeof(DigitOneState) || Calculator.state.GetType() == typeof(EqualState))
             {
                 Calculator.num1 = Calculator.num1 * -1;
             }
@@ -169,7 +169,7 @@ namespace M11Lab
         private void button17_Click(object sender, EventArgs e)
         {
             // 1/X BUTTON
-            if (Calculator.state.GetType() == typeof(DigitOneState))
+            if (Calculator.state.GetType() == typeof(DigitOneState) || Calculator.state.GetType() == typeof(EqualState))
             {
                 Calculator.num1 = 1 / Calculator.num1;
             }
@@ -185,7 +185,7 @@ namespace M11Lab
         {
             // SQRT BUTTON
 
-            if (Calculator.state.GetType() == typeof(DigitOneState))
+            if (Calculator.state.GetType() == typeof(DigitOneState) || Calculator.state.GetType() == typeof(EqualState))
             {
                 Calculator.num1 = Math.Sqrt(Calculator.num1);
             }
@@ -212,7 +212,7 @@ namespace M11Lab
         {
             // . BUTTON
 
-            if (Calculator.state.GetType() == typeof(DigitOneState))
+            if (Calculator.state.GetType() == typeof(DigitOneState) || Calculator.state.GetType() == typeof(EqualState))
             {
                 Calculator.num1 = Calculator.num1 / 10;
             }

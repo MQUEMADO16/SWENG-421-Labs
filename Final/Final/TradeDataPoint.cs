@@ -9,14 +9,11 @@ namespace Final
 {
     internal class TradeDataPoint
     {
-        private string ticker { get; set; }
-        private double currentPrice { get; set; }
-        private long volume { get; set; }
-        private Instant timestamp { get; set; }
+        public string Ticker { get; set; }
+        public double Price { get; set; }
+        public long Volume { get; set; }
+        public Instant Timestamp { get; set; }
 
-        public TradeDataPoint()
-        {
-
-        }
+        public TradeDataPoint() { }
     }
 }

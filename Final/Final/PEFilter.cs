@@ -10,7 +10,7 @@ namespace Final
     {
         public bool getData(double low, double high, TradeDataPoint data)
         {
-            if (low <= data.Price <= high)
+            if (low <= data.Price  && data.Price <= high)
             {
                 return true;
             }

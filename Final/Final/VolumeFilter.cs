@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Final
 {
-    internal class PEFilter
+    internal class VolumeFilter
     {
         public bool getData(double low, double high, TradeDataPoint data)
-        {   
-            // TODO need some kind of data point in TradeDataPoint for PE
+        {
+            /*// TODO need some kind of data point in TradeDataPoint for PE
             if (low <= data.Volume <= high)
             {
                 return true;
@@ -19,6 +19,8 @@ namespace Final
             {
                 return false; 
             }
+            */
+            return false;
         }
     }
 }

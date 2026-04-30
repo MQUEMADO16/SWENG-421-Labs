@@ -11,7 +11,7 @@ namespace Final
         public bool getData(double low, double high, TradeDataPoint data)
         {   
             // TODO some kind of historic change in TradeDataPoint?
-            if (low <= data.Price <= high)
+            if (low <= data.Price && data.Price <= high)
             {
                 return true;
             }

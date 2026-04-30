@@ -17,6 +17,9 @@ namespace Final
             if (type == "Alpaca")
             {
                 return new AlpacaLiveProvider();
+            } else if(type == "Yahoo")
+            {
+                return new YahooLiveProvider();
             }
             // else if Finnhub, etc
 

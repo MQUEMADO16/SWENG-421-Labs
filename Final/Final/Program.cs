@@ -14,12 +14,8 @@ namespace Final
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             LiveProviderFactory factory = new LiveProviderFactory();
-            ILiveStockProvider AlpacaProvider = factory.createLiveProvider("Alpaca");
-            
-            var client = AlpacaProvider.Client;
-            var request = new LatestMarketDataRequest("AAPL");
-            var quote = await client.GetLatestQuoteAsync(request);
-            var price = quote.AskPrice;
+            ILiveStockProvider provider = factory.createLiveProvider("Yahoo");
+            var price = await provider.GetPriceAsync("AAPL");
             Console.WriteLine(price);
 
             ApplicationConfiguration.Initialize();

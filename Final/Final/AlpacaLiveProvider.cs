@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DotNetEnv;
 using Alpaca.Markets;
+using DotNetEnv;
+using YahooFinanceApi;
 
 namespace Final
 {
@@ -41,6 +42,11 @@ namespace Final
         public void disconnect()
         {
             _client = null;
+        }
+
+        public async Task<double?> GetPriceAsync(string ticker)
+        {
+            return null;
         }
 
         public void subscribe(string ticker)

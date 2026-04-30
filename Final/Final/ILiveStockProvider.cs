@@ -9,10 +9,10 @@ namespace Final
 {
     internal interface ILiveStockProvider
     {
-        IAlpacaDataClient Client { get; }
-
         public void connect();
         public void disconnect();
         public void subscribe(string ticker);
+
+        public Task<double?> GetPriceAsync(string ticker);
     }
 }

@@ -14,6 +14,7 @@ namespace Final.UI
     {
         private readonly StockMonitorEngine _engine;
         private Chart priceChart;
+        private ComboBox cmbChartTicker;
         private System.Windows.Forms.Timer uiRefreshTimer;
 
         private List<string> _monitoredTickers = new List<string> { "BINANCE:BTCUSDT", "AAPL", "MSFT", "NVDA" };
@@ -43,7 +44,6 @@ namespace Final.UI
             InitializeLayout();
             SetupSamplingTimer();
 
-            // Hook the lifecycle events natively
             this.Load += ucDashboard_Load;
             this.VisibleChanged += ucDashboard_VisibleChanged;
         }
@@ -54,13 +54,11 @@ namespace Final.UI
 
             await LoadHistoricalData();
 
-            // Boot the background data stream
             if (_engine.getActiveStreamCount() == 0)
             {
                 await _engine.startLiveFeed(_monitoredTickers);
             }
 
-            // Populate the initial state and start the timer
             PopulateDashboardData();
             uiRefreshTimer?.Start();
 
@@ -71,7 +69,6 @@ namespace Final.UI
         {
             if (this.Visible)
             {
-                // Waking up from another tab
                 if (_isInitialized) PopulateDashboardData();
 
                 _engine.getAlertService().onAlertGenerated += HandleNewAlert;
@@ -79,7 +76,6 @@ namespace Final.UI
             }
             else
             {
-                // Going to sleep (e.g. user clicked Watchlist)
                 _engine.getAlertService().onAlertGenerated -= HandleNewAlert;
                 uiRefreshTimer?.Stop();
             }
@@ -94,7 +90,8 @@ namespace Final.UI
             Panel pnlHeader = new Panel { Dock = DockStyle.Top, Height = 50 };
             Label lblTitle = new Label { Text = "Dashboard", Font = new Font("Segoe UI", 20, FontStyle.Regular), ForeColor = Color.FromArgb(33, 37, 41), AutoSize = true, Location = new Point(0, 0) };
 
-            Label lblStatus = new Label { Text = "Data Source: Finnhub WebSocket", Font = new Font("Segoe UI", 10, FontStyle.Regular), ForeColor = Color.FromArgb(40, 167, 69), AutoSize = true, Location = new Point(this.Width - 300, 15), Anchor = AnchorStyles.Top | AnchorStyles.Right };
+            Label lblStatus = new Label { Text = "Data Source: Finnhub WebSocket • Connected", Font = new Font("Segoe UI", 10, FontStyle.Regular), ForeColor = Color.FromArgb(40, 167, 69), Dock = DockStyle.Right, TextAlign = ContentAlignment.MiddleRight, AutoSize = false, Width = 400, Padding = new Padding(0, 0, 10, 0) };
+
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Controls.Add(lblStatus);
 
@@ -105,7 +102,7 @@ namespace Final.UI
             pnlStats.Controls.Add(CreateStatCard("Monitored Stocks", _monitoredTickers.Count.ToString(), Color.FromArgb(0, 123, 255), out lblMonitoredCount), 0, 0);
             pnlStats.Controls.Add(CreateStatCard("Active Rules", "0", Color.FromArgb(102, 16, 242), out lblActiveRulesCount), 1, 0);
             pnlStats.Controls.Add(CreateStatCard("Alerts (Today)", "0", Color.FromArgb(220, 53, 69), out lblAlertsCount), 2, 0);
-            pnlStats.Controls.Add(CreateStatCard("Avg. Latency", "N/A", Color.FromArgb(40, 167, 69), out lblLatencyCount), 3, 0);
+            pnlStats.Controls.Add(CreateStatCard("Avg. Latency", "-- ms", Color.FromArgb(40, 167, 69), out lblLatencyCount), 3, 0);
 
             TableLayoutPanel grid = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 2 };
             grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 65F));
@@ -113,7 +110,22 @@ namespace Final.UI
             grid.RowStyles.Add(new RowStyle(SizeType.Percent, 55F));
             grid.RowStyles.Add(new RowStyle(SizeType.Percent, 45F));
 
-            Panel pnlChart = CreateSection("", priceChart);
+            Panel pnlChartWrapper = new Panel { Dock = DockStyle.Fill };
+
+            cmbChartTicker = new ComboBox
+            {
+                Dock = DockStyle.Top,
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Font = new Font("Segoe UI", 10),
+                Height = 30
+            };
+            cmbChartTicker.SelectedIndexChanged += async (s, e) => await SwitchChartTicker(cmbChartTicker.SelectedItem.ToString());
+
+            priceChart.Dock = DockStyle.Fill;
+            pnlChartWrapper.Controls.Add(priceChart);
+            pnlChartWrapper.Controls.Add(cmbChartTicker);
+
+            Panel pnlChart = CreateSection("Chart Focus", pnlChartWrapper);
             Panel pnlAlerts = CreateSection("Live Alerts", lstLiveAlerts);
             Panel pnlRules = CreateSection("My Rules", dgvRules);
             Panel pnlWatchlist = CreateSection("Watchlist", dgvWatchlist);
@@ -126,6 +138,14 @@ namespace Final.UI
             this.Controls.Add(grid);
             this.Controls.Add(pnlStats);
             this.Controls.Add(pnlHeader);
+        }
+
+        private async Task SwitchChartTicker(string newTicker)
+        {
+            _activeChartTicker = newTicker;
+            priceChart.Series["Price"].Points.Clear();
+            priceChart.Titles["MainTitle"].Text = $"{_activeChartTicker} - Loading...";
+            await LoadHistoricalData();
         }
 
         private void SetupLiveAlertsFeed()
@@ -207,6 +227,15 @@ namespace Final.UI
 
             lblMonitoredCount.Text = _engine.getActiveStreamCount().ToString();
             lblActiveRulesCount.Text = _engine.getAlertService().getRuleCount().ToString();
+
+            if (cmbChartTicker.Items.Count == 0)
+            {
+                foreach (var ticker in _engine.getActiveTickers())
+                {
+                    cmbChartTicker.Items.Add(ticker);
+                }
+                cmbChartTicker.SelectedItem = _activeChartTicker;
+            }
         }
 
         private void HandleNewAlert(AlertRule rule, string alertMessage)
@@ -217,7 +246,7 @@ namespace Final.UI
                 return;
             }
 
-            string timeStr = DateTime.Now.ToString("HH:mm:ss.fff");
+            string timeStr = DateTime.Now.ToString("HH:mm:ss");
             lstLiveAlerts.Items.Insert(0, $"[{timeStr}] {rule.TargetTicker} • {rule.ActiveFilter.GetType().Name}");
             _alertsFiredToday++;
             lblAlertsCount.Text = _alertsFiredToday.ToString();
@@ -227,12 +256,17 @@ namespace Final.UI
         {
             uiRefreshTimer = new System.Windows.Forms.Timer { Interval = 1000 };
             uiRefreshTimer.Tick += (s, e) => {
+
+                if (priceChart == null || priceChart.IsDisposed) return;
+
                 var latest = _engine.getAlertService().getTargetCache().getLiveDataPoint(_activeChartTicker);
                 if (latest != null)
                 {
                     var series = priceChart.Series["Price"];
                     series.Points.AddXY(DateTime.Now, latest.Price);
-                    if (series.Points.Count > 50) series.Points.RemoveAt(0);
+                    if (series.Points.Count > 300) series.Points.RemoveAt(0);
+
+                    priceChart.Titles["MainTitle"].Text = $"{_activeChartTicker} - Live Feed";
                 }
 
                 lblMonitoredCount.Text = _engine.getActiveStreamCount().ToString();
@@ -288,16 +322,27 @@ namespace Final.UI
         private void SetupChart()
         {
             priceChart = new Chart { BackColor = Color.White };
-
             priceChart.MinimumSize = new Size(10, 10);
 
-            priceChart.Titles.Add(new Title { Name = "MainTitle", Text = $"{_activeChartTicker}", Font = new Font("Segoe UI", 12, FontStyle.Regular), ForeColor = Color.FromArgb(33, 37, 41), Alignment = ContentAlignment.TopLeft });
+            priceChart.Titles.Add(new Title { Name = "MainTitle", Text = $"{_activeChartTicker} - Pending Data...", Font = new Font("Segoe UI", 12, FontStyle.Regular), ForeColor = Color.FromArgb(33, 37, 41), Alignment = ContentAlignment.TopLeft });
+
             ChartArea area = new ChartArea("MainArea") { BackColor = Color.White };
             area.AxisX.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
             area.AxisY.MajorGrid.LineColor = Color.FromArgb(240, 240, 240);
+
+            area.AxisX.LabelStyle.Format = "HH:mm:ss";
+            area.AxisX.IsMarginVisible = false;
             area.AxisY.IsStartedFromZero = false;
+
             priceChart.ChartAreas.Add(area);
-            Series series = new Series("Price") { ChartType = SeriesChartType.Spline, XValueType = ChartValueType.DateTime, Color = Color.FromArgb(40, 167, 69), BorderWidth = 2 };
+
+            Series series = new Series("Price")
+            {
+                ChartType = SeriesChartType.Line,
+                XValueType = ChartValueType.DateTime,
+                Color = Color.FromArgb(40, 167, 69),
+                BorderWidth = 2
+            };
             priceChart.Series.Add(series);
         }
 
@@ -306,12 +351,16 @@ namespace Final.UI
             try
             {
                 var history = await _engine.fetchInitialChartData(_activeChartTicker);
+                if (history == null || history.Count == 0) return;
+
                 var series = priceChart.Series["Price"];
                 foreach (var p in history)
                 {
                     DateTime dt = DateTimeOffset.FromUnixTimeMilliseconds(p.Timestamp).DateTime.ToLocalTime();
                     series.Points.AddXY(dt, p.Price);
                 }
+
+                priceChart.Titles["MainTitle"].Text = $"{_activeChartTicker} - Live Feed";
             }
             catch (Exception ex)
             {

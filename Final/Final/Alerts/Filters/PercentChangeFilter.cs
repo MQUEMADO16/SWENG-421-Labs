@@ -2,7 +2,7 @@
 
 namespace Final.Alerts.Filters
 {
-    internal class PercentChangeFilter : IFilter
+    public class PercentChangeFilter : IFilter
     {
         public bool getData(double low, double high, TradeDataPoint data)
         {

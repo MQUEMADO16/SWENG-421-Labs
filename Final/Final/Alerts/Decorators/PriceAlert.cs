@@ -2,7 +2,7 @@
 
 namespace Final.Alerts.Decorators
 {
-    internal class PriceAlert : IAlert
+    public class PriceAlert : IAlert
     {
         private TradeDataPoint _data;
         private double _low;

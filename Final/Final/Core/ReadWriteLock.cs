@@ -2,7 +2,7 @@
 
 namespace Final.Core
 {
-    internal class ReadWriteLock
+    public class ReadWriteLock
     {
         private int _readers = 0;
         private int _writers = 0;

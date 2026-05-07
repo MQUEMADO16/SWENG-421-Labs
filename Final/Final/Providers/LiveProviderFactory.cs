@@ -2,7 +2,7 @@
 
 namespace Final.Providers
 {
-    internal class LiveProviderFactory
+    public class LiveProviderFactory
     {
         public LiveProviderFactory() { }
 

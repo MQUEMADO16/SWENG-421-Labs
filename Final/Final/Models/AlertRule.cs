@@ -2,7 +2,7 @@
 
 namespace Final.Models
 {
-    internal class AlertRule
+    public class AlertRule
     {
         public string TargetTicker { get; set; }
         public double LowThreshold { get; set; }

@@ -2,7 +2,7 @@
 
 namespace Final.Alerts.Filters
 {
-    internal class PriceEvaluationFilter : IFilter
+    public class PriceEvaluationFilter : IFilter
     {
         public bool getData(double low, double high, TradeDataPoint data)
         {

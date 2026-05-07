@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Final.Providers
 {
-    internal class FinnhubLiveProvider : ILiveStockProvider
+    public class FinnhubLiveProvider : ILiveStockProvider
     {
         private readonly string _apiKey = "d7tn2f9r01qlbd3kp3d0d7tn2f9r01qlbd3kp3dg";
         private ClientWebSocket _webSocket;
@@ -129,13 +129,13 @@ namespace Final.Providers
         }
     }
 
-    internal class FinnhubTradeMessage
+    public class FinnhubTradeMessage
     {
         [JsonPropertyName("data")]
         public FinnhubTrade[] Data { get; set; }
     }
 
-    internal class FinnhubTrade
+    public class FinnhubTrade
     {
         [JsonPropertyName("p")]
         public double Price { get; set; }

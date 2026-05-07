@@ -3,7 +3,7 @@ using Final.Models;
 
 namespace Final.Alerts.Decorators
 {
-    internal class TimeStampAlert : AlertDecorator
+    public class TimeStampAlert : AlertDecorator
     {
         private TradeDataPoint _data;
 

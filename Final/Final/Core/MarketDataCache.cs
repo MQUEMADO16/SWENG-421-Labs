@@ -3,7 +3,7 @@ using Final.Models;
 
 namespace Final.Core
 {
-    internal class MarketDataCache : ITradeBroadcaster
+    public class MarketDataCache : ITradeBroadcaster
     {
         // State
         private readonly Dictionary<string, TradeDataPoint> _liveCache;

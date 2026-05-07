@@ -2,7 +2,7 @@
 
 namespace Final.Alerts.Decorators
 {
-    internal class PercentChangeAlert : AlertDecorator
+    public class PercentChangeAlert : AlertDecorator
     {
         private TradeDataPoint _data;
 

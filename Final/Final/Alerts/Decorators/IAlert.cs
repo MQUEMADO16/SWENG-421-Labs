@@ -1,6 +1,6 @@
 ﻿namespace Final.Alerts.Decorators
 {
-    internal interface IAlert
+    public interface IAlert
     {
         string sendAlert();
     }

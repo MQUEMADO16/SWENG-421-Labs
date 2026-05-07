@@ -1,6 +1,6 @@
 ﻿namespace Final.Alerts.Decorators
 {
-    internal abstract class AlertDecorator : IAlert
+    public abstract class AlertDecorator : IAlert
     {
         protected IAlert _alert;
 

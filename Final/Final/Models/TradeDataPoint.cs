@@ -1,6 +1,6 @@
 ﻿namespace Final.Models
 {
-    internal class TradeDataPoint
+    public class TradeDataPoint
     {
         // Live Fields (Updated by WebSocket)
         public string Ticker { get; set; }

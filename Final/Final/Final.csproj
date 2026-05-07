@@ -12,6 +12,7 @@
     <PackageReference Include="Alpaca.Markets" Version="7.2.0" />
     <PackageReference Include="DotNetEnv" Version="3.2.0" />
     <PackageReference Include="NodaTime" Version="3.3.2" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.9.1" />
     <PackageReference Include="System.Windows.Forms.DataVisualization" Version="1.0.0-prerelease.20110.1" />
     <PackageReference Include="YahooFinanceApi" Version="2.3.3" />
   </ItemGroup>

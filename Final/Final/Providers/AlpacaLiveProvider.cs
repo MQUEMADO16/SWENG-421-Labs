@@ -3,7 +3,7 @@
 namespace Final.Providers
 {
     // We had to stop using this due to a paywall.
-    internal class AlpacaLiveProvider : ILiveStockProvider
+    public class AlpacaLiveProvider : ILiveStockProvider
     {
         public MarketDataCache DataTarget { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

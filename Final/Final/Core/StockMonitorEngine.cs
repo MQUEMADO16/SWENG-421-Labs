@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Final.Core;
 using Final.Alerts;
@@ -10,12 +11,13 @@ namespace Final.Engine
 {
     public class StockMonitorEngine
     {
-        // Fields exactly matching your UML (using C# _camelCase for private variables)
         private MarketDataCache _globalCache;
         private UserAlertService _alertService;
         private LiveProviderFactory _factory;
         private ILiveStockProvider _activeStream;
         private YahooHistoryService _historicalService;
+
+        private readonly HashSet<string> _activeTickers = new HashSet<string>();
 
         public StockMonitorEngine()
         {
@@ -30,29 +32,58 @@ namespace Final.Engine
             _historicalService = new YahooHistoryService();
 
             // Use the Factory to get the provider
-            // Note that it could be set up to accept user input to select a new provider, leveraging Factory Method
             _activeStream = _factory.createLiveProvider("Finnhub");
 
             // Link the data stream to the cache
             _activeStream.DataTarget = _globalCache;
         }
 
-        public async Task startLiveFeed(string ticker)
+        /// <summary>
+        /// Boots the WebSocket connection and subscribes to an initial batch of tickers.
+        /// </summary>
+        public async Task startLiveFeed(List<string> initialTickers)
         {
+            Debug.WriteLine("[ENGINE] Booting Multiplexed Live Feed...");
+
             // Ensure the socket is connected before subscribing
             await _activeStream.connect();
-            await _activeStream.subscribe(ticker);
+
+            // Loop through and subscribe to everything
+            foreach (var ticker in initialTickers)
+            {
+                await SubscribeToTicker(ticker);
+            }
+        }
+
+        /// <summary>
+        /// Safely adds a new ticker to the open WebSocket stream.
+        /// Prevents duplicate subscriptions using a HashSet.
+        /// </summary>
+        public async Task SubscribeToTicker(string ticker)
+        {
+            // .Add() returns false if the ticker is already in the HashSet
+            if (_activeTickers.Add(ticker))
+            {
+                await _activeStream.subscribe(ticker);
+                Debug.WriteLine($"[ENGINE] Subscribed to new stream: {ticker}");
+            }
+            else
+            {
+                Debug.WriteLine($"[ENGINE] Ticker {ticker} is already multiplexed. Skipping.");
+            }
         }
 
         public async Task stopSystem()
         {
             if (_activeStream != null)
             {
+                Debug.WriteLine("[ENGINE] Shutting down streams...");
                 await _activeStream.disconnect();
+                _activeTickers.Clear();
             }
         }
 
-        // UI Helper Methodsm
+        // UI Helper Methods
 
         public UserAlertService getAlertService()
         {
@@ -65,6 +96,11 @@ namespace Final.Engine
             DateTime start = end.AddDays(-30);
 
             return await _historicalService.getHistoricalData(ticker, start, end);
+        }
+
+        public int getActiveStreamCount()
+        {
+            return _activeTickers.Count;
         }
     }
 }

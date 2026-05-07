@@ -5,7 +5,7 @@ using Final.UI;
 
 namespace Final
 {
-    internal static class Program
+    public static class Program
     {
         /// <summary>
         ///  The main entry point for the application.
@@ -14,12 +14,8 @@ namespace Final
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-
-            // 1. Boot up the backend infrastructure
-            StockMonitorEngine engine = new StockMonitorEngine();
+            var engine = new StockMonitorEngine();
             engine.initializeSystem();
-
-            // 2. Inject the engine into the main form
             Application.Run(new MainShell(engine));
         }
     }

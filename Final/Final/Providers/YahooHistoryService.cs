@@ -3,7 +3,7 @@ using YahooFinanceApi;
 
 namespace Final.Providers
 {
-    internal class YahooHistoryService
+    public class YahooHistoryService
     {
         public async Task<List<TradeDataPoint>> getHistoricalData(string ticker, DateTime startDate, DateTime endDate)
         {

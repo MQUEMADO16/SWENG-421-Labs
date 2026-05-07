@@ -2,7 +2,7 @@
 
 namespace Final.Providers
 {
-    internal interface ILiveStockProvider
+    public interface ILiveStockProvider
     {
         MarketDataCache DataTarget { get; set; }
         Task connect();

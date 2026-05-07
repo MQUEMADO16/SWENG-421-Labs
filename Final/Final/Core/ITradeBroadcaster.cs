@@ -2,7 +2,7 @@
 
 namespace Final.Core
 {
-    internal interface ITradeBroadcaster
+    public interface ITradeBroadcaster
     {
         void attachObserver(ITradeObserver observer);
         void detachObserver(ITradeObserver observer);

@@ -2,7 +2,7 @@
 
 namespace Final.Core
 {
-    internal interface ITradeObserver
+    public interface ITradeObserver
     {
         void update(TradeDataPoint data);
     }

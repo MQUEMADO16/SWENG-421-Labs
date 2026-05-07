@@ -42,7 +42,7 @@ namespace Final.UI
             SetupSamplingTimer();
 
             // Hook into the background engine's Alert Event
-            _engine.getAlertService().OnAlertGenerated += HandleNewAlert;
+            _engine.getAlertService().onAlertGenerated += HandleNewAlert;
 
             this.Load += ucDashboard_Load;
             this.Disposed += ucDashboard_Disposed;
@@ -145,11 +145,11 @@ namespace Final.UI
 
         // --- BACKGROUND EVENT LISTENERS ---
 
-        private void HandleNewAlert(string alertMessage)
+        private void HandleNewAlert(AlertRule rule, string alertMessage)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action(() => HandleNewAlert(alertMessage)));
+                this.Invoke(new Action(() => HandleNewAlert(rule, alertMessage)));
                 return;
             }
 
@@ -252,7 +252,7 @@ namespace Final.UI
 
             if (_engine != null)
             {
-                _engine.getAlertService().OnAlertGenerated -= HandleNewAlert;
+                _engine.getAlertService().onAlertGenerated -= HandleNewAlert;
             }
         }
     }

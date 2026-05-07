@@ -8,6 +8,10 @@ namespace Final.Models
         public double LowThreshold { get; set; }
         public double HighThreshold { get; set; }
         public IFilter ActiveFilter { get; set; }
+        public Guid RuleId { get; private set; } = Guid.NewGuid();
+        public bool IsSuspended { get; set; } = false;
+        public string LastAlertMessage { get; set; } = "";
+        public string LastTriggerTime { get; set; } = "";
 
         // Decorator Flags for the UI
         public bool IncludeTimestamp { get; set; }

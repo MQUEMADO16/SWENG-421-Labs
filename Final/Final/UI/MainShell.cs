@@ -84,8 +84,8 @@ namespace Final.UI
             // Navigation Buttons
             CreateNavButton("Dashboard", 100, (s, e) => NavigateTo(new ucDashboard(_engine)));
             CreateNavButton("Watchlist", 155, (s, e) => NavigateTo(new ucWatchlist(_engine)));
-            CreateNavButton("Alerts", 210, (s, e) => Debug.WriteLine("Alerts Clicked"));
-            CreateNavButton("Rules", 265, (s, e) => Debug.WriteLine("Rules Clicked"));
+            CreateNavButton("Alerts", 210, (s, e) => NavigateTo(new ucAlerts(_engine)));
+            CreateNavButton("Rules", 265, (s, e) => NavigateTo(new ucRules(_engine)));
 
             // Sidebar Border Decoration
             // Adds a subtle 1px gray line to the right to separate sidebar from content

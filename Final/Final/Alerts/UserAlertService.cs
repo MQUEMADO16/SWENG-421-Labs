@@ -13,7 +13,7 @@ namespace Final.Alerts
 
         private readonly object _rulesLock = new object();
 
-        public event Action<string>? OnAlertGenerated;
+        public event Action<AlertRule, string>? onAlertGenerated;
 
         public UserAlertService(MarketDataCache cache)
         {
@@ -41,15 +41,20 @@ namespace Final.Alerts
 
             foreach (var rule in rulesSnapshot)
             {
-                if (rule.TargetTicker == data.Ticker)
+                if (!rule.IsSuspended && rule.TargetTicker == data.Ticker)
                 {
                     if (rule.IsTriggered(data))
                     {
+                        rule.IsSuspended = true;
+
                         IAlert finalAlert = new PriceAlert(data, rule.LowThreshold, rule.HighThreshold);
                         if (rule.IncludeTimestamp) finalAlert = new TimeStampAlert(finalAlert, data);
                         if (rule.IncludePercentChange) finalAlert = new PercentChangeAlert(finalAlert, data);
 
-                        OnAlertGenerated?.Invoke(finalAlert.sendAlert());
+                        rule.LastAlertMessage = finalAlert.sendAlert();
+                        rule.LastTriggerTime = DateTime.Now.ToString("HH:mm:ss.fff");
+
+                        onAlertGenerated?.Invoke(rule, rule.LastAlertMessage);
                     }
                 }
             }
@@ -70,6 +75,18 @@ namespace Final.Alerts
             lock (_rulesLock)
             {
                 return new List<AlertRule>(_activeRules);
+            }
+        }
+
+        public void acknowledgeRule(Guid ruleId)
+        {
+            lock (_rulesLock)
+            {
+                var rule = _activeRules.Find(r => r.RuleId == ruleId);
+                if (rule != null)
+                {
+                    rule.IsSuspended = false;
+                }
             }
         }
     }

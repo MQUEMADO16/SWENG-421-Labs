@@ -102,5 +102,9 @@ namespace Final.Engine
         {
             return _activeTickers.Count;
         }
+        public List<string> getActiveTickers()
+        {
+            return new List<string>(_activeTickers);
+        }
     }
 }

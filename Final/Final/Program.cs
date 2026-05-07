@@ -1,5 +1,7 @@
-using System.Threading.Tasks;
-using Alpaca.Markets;
+using System;
+using System.Windows.Forms;
+using Final.Engine;
+using Final.UI;
 
 namespace Final
 {
@@ -9,17 +11,16 @@ namespace Final
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static async Task Main()
+        static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            LiveProviderFactory factory = new LiveProviderFactory();
-            ILiveStockProvider provider = factory.createLiveProvider("Yahoo");
-            var price = await provider.GetPriceAsync("AAPL");
-            Console.WriteLine(price);
-
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            // 1. Boot up the backend infrastructure
+            StockMonitorEngine engine = new StockMonitorEngine();
+            engine.initializeSystem();
+
+            // 2. Inject the engine into the main form
+            Application.Run(new MainShell(engine));
         }
     }
 }

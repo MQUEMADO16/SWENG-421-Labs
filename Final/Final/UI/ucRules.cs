@@ -112,11 +112,27 @@ namespace Final.UI
                 Font = new Font("Segoe UI", 10)
             };
 
+            dgvRules.Columns.Add("RuleId", "RuleId");
+            dgvRules.Columns["RuleId"].Visible = false;
+
             dgvRules.Columns.Add("Ticker", "Target Ticker");
             dgvRules.Columns.Add("Low", "Low Limit");
             dgvRules.Columns.Add("High", "High Limit");
             dgvRules.Columns.Add("Filter", "Active Filter");
             dgvRules.Columns.Add("Decorators", "Active Decorators");
+
+            DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn
+            {
+                HeaderText = "Action",
+                Text = "Delete",
+                UseColumnTextForButtonValue = true,
+                FlatStyle = FlatStyle.Flat
+            };
+            btnDelete.DefaultCellStyle.BackColor = Color.FromArgb(220, 53, 69);
+            btnDelete.DefaultCellStyle.ForeColor = Color.White;
+
+            dgvRules.Columns.Add(btnDelete);
+            dgvRules.CellContentClick += DgvRules_CellContentClick;
 
             mainGrid.Controls.Add(pnlForm, 0, 0);
             mainGrid.Controls.Add(dgvRules, 1, 0);
@@ -155,7 +171,7 @@ namespace Final.UI
                 string decorString = activeDecors.Count > 0 ? string.Join(", ", activeDecors) : "None";
                 string filterName = rule.ActiveFilter.GetType().Name;
 
-                dgvRules.Rows.Add(rule.TargetTicker, $"${rule.LowThreshold:F2}", $"${rule.HighThreshold:F2}", filterName, decorString);
+                dgvRules.Rows.Add(rule.RuleId.ToString(), rule.TargetTicker, $"${rule.LowThreshold:F2}", $"${rule.HighThreshold:F2}", filterName, decorString);
             }
         }
 
@@ -206,6 +222,20 @@ namespace Final.UI
             txtHighPrice.Clear();
             txtLowPrice.Clear();
             RefreshRulesGrid();
+        }
+
+        private void DgvRules_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex == 6)
+            {
+                string rawId = dgvRules.Rows[e.RowIndex].Cells["RuleId"].Value.ToString();
+
+                if (Guid.TryParse(rawId, out Guid ruleId))
+                {
+                    _engine.getAlertService().removeRule(ruleId);
+                    dgvRules.Rows.RemoveAt(e.RowIndex);
+                }
+            }
         }
     }
 }

@@ -102,9 +102,16 @@ namespace Final.Engine
         {
             return _activeTickers.Count;
         }
+
         public List<string> getActiveTickers()
         {
             return new List<string>(_activeTickers);
+        }
+
+        public long getSystemLatency()
+        {
+            if (_activeStream == null) return 0;
+            return _activeStream.getCurrentLatencyMs();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Final.Engine;
 
 namespace Final.UI
@@ -10,10 +11,11 @@ namespace Final.UI
     {
         private readonly StockMonitorEngine _engine;
 
-        // UI Layout Components
         private Panel pnlSidebar;
         private Panel pnlMainContent;
         private Label lblLogo;
+        private ucDashboard _cachedDashboard;
+        private Control _currentView;
 
         public MainShell(StockMonitorEngine engine)
         {
@@ -21,39 +23,26 @@ namespace Final.UI
             _engine = engine;
 
             ConfigureWindow();
-
             InitializeShellLayout();
 
-            this.Load += (s, e) => NavigateTo(new ucDashboard(_engine));
-
-            // 4. Teardown logic
+            this.Load += MainShell_Load;
             this.FormClosing += MainShell_FormClosing;
         }
 
         private void ConfigureWindow()
         {
             this.Text = "StockMonitor Dashboard";
-
-            // Set the internal canvas size first
             this.ClientSize = new Size(1280, 800);
-
-            // Lock the border so it cannot be resized by dragging the edges
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            // 3. Disable the Maximize button
             this.MaximizeBox = false;
-
-            // Force the min and max size to match just to be safe
             this.MaximumSize = this.Size;
             this.MinimumSize = this.Size;
-
             this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(248, 249, 250);
         }
 
         private void InitializeShellLayout()
         {
-            // The Content Canvas
             pnlMainContent = new Panel
             {
                 Dock = DockStyle.Fill,
@@ -61,7 +50,6 @@ namespace Final.UI
                 Padding = new Padding(30)
             };
 
-            // Sticky Sidebar
             pnlSidebar = new Panel
             {
                 Dock = DockStyle.Left,
@@ -70,25 +58,21 @@ namespace Final.UI
                 BorderStyle = BorderStyle.None
             };
 
-            // Logo / Branding
             lblLogo = new Label
             {
                 Text = "StockMonitor",
-                Font = new Font("Segoe UI", 18, FontStyle.Bold),
+                Font = new Font("Segoe UI", 18, FontStyle.Regular),
                 ForeColor = Color.FromArgb(33, 37, 41),
                 Location = new Point(25, 25),
                 AutoSize = true
             };
             pnlSidebar.Controls.Add(lblLogo);
 
-            // Navigation Buttons
-            CreateNavButton("Dashboard", 100, (s, e) => NavigateTo(new ucDashboard(_engine)));
+            CreateNavButton("Dashboard", 100, (s, e) => NavigateTo(_cachedDashboard));
             CreateNavButton("Watchlist", 155, (s, e) => NavigateTo(new ucWatchlist(_engine)));
             CreateNavButton("Alerts", 210, (s, e) => NavigateTo(new ucAlerts(_engine)));
             CreateNavButton("Rules", 265, (s, e) => NavigateTo(new ucRules(_engine)));
 
-            // Sidebar Border Decoration
-            // Adds a subtle 1px gray line to the right to separate sidebar from content
             pnlSidebar.Paint += (s, e) => {
                 using (Pen p = new Pen(Color.FromArgb(233, 236, 239), 1))
                 {
@@ -96,8 +80,6 @@ namespace Final.UI
                 }
             };
 
-            // ASSEMBLY
-            // Order matters for Z-index. Add the sidebar last so it sits on top
             this.Controls.Add(pnlMainContent);
             this.Controls.Add(pnlSidebar);
         }
@@ -106,7 +88,7 @@ namespace Final.UI
         {
             Button btn = new Button
             {
-                Text = "      " + text, // Space for a future icon
+                Text = "      " + text,
                 TextAlign = ContentAlignment.MiddleLeft,
                 FlatStyle = FlatStyle.Flat,
                 Font = new Font("Segoe UI", 11, FontStyle.Regular),
@@ -117,7 +99,6 @@ namespace Final.UI
                 Cursor = Cursors.Hand
             };
 
-            // Remove the default button borders
             btn.FlatAppearance.BorderSize = 0;
             btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(241, 243, 245);
 
@@ -125,36 +106,33 @@ namespace Final.UI
             pnlSidebar.Controls.Add(btn);
         }
 
-        /// <summary>
-        /// The Core SPA Method: Swaps the visible UserControl in the main content panel.
-        /// </summary>
-        public void NavigateTo(UserControl view)
+        private void MainShell_Load(object sender, EventArgs e)
         {
-            if (view == null) return;
+            _cachedDashboard = new ucDashboard(_engine);
+            NavigateTo(_cachedDashboard);
+        }
 
-            if (pnlMainContent.Controls.Count > 0 && pnlMainContent.Controls[0].GetType() == view.GetType())
+        private void NavigateTo(Control newView)
+        {
+            if (newView == null) return;
+
+            if (_currentView != null)
             {
-                view.Dispose();
-                return;
+                pnlMainContent.Controls.Remove(_currentView);
+
+                if (_currentView != _cachedDashboard)
+                {
+                    _currentView.Dispose();
+                }
             }
 
-            // Clear previous view and dispose to save memory
-            foreach (Control ctrl in pnlMainContent.Controls)
-            {
-                ctrl.Dispose();
-            }
-            pnlMainContent.Controls.Clear();
-
-            // Setup new view
-            view.Dock = DockStyle.Fill;
-            pnlMainContent.Controls.Add(view);
-
-            Debug.WriteLine($"[SPA] Navigated to {view.GetType().Name}");
+            newView.Dock = DockStyle.Fill;
+            pnlMainContent.Controls.Add(newView);
+            _currentView = newView;
         }
 
         private async void MainShell_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Ensure the engine and web-sockets close politely
             Debug.WriteLine("Shutting down system...");
             await _engine.stopSystem();
         }

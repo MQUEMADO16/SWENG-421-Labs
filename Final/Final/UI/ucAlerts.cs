@@ -16,9 +16,10 @@ namespace Final.UI
             _engine = engine;
 
             InitializeLayout();
-            populateExistingAlerts();
 
-            // Hook into the event
+            PopulateExistingAlerts();
+
+            // Hook into the engine event
             _engine.getAlertService().onAlertGenerated += HandleNewAlert;
             this.Disposed += ucAlerts_Disposed;
         }
@@ -31,8 +32,8 @@ namespace Final.UI
 
             // --- HEADER ---
             Panel pnlHeader = new Panel { Dock = DockStyle.Top, Height = 60 };
-            Label lblTitle = new Label { Text = "Actionable Alerts", Font = new Font("Segoe UI", 20), ForeColor = Color.FromArgb(33, 37, 41), AutoSize = true };
-            Label lblSub = new Label { Text = "Rules are suspended upon triggering until acknowledged.", Font = new Font("Segoe UI", 10), ForeColor = Color.Gray, Location = new Point(0, 35), AutoSize = true };
+            Label lblTitle = new Label { Text = "Actionable Alerts", Font = new Font("Segoe UI", 20, FontStyle.Bold), ForeColor = Color.FromArgb(33, 37, 41), AutoSize = true };
+            Label lblSub = new Label { Text = "Rules are suspended upon triggering. Click 'Read Details' to view and acknowledge.", Font = new Font("Segoe UI", 10), ForeColor = Color.Gray, Location = new Point(0, 35), AutoSize = true };
             pnlHeader.Controls.Add(lblTitle);
             pnlHeader.Controls.Add(lblSub);
 
@@ -57,19 +58,19 @@ namespace Final.UI
             dgvActiveAlerts.Columns.Add("RuleId", "RuleId");
             dgvActiveAlerts.Columns["RuleId"].Visible = false; // Hidden tracking column
 
+            dgvActiveAlerts.Columns.Add("Message", "Message");
+            dgvActiveAlerts.Columns["Message"].Visible = false; // Hidden payload for the popup
+
             dgvActiveAlerts.Columns.Add("Time", "Trigger Time");
-            dgvActiveAlerts.Columns["Time"].Width = 150;
+            dgvActiveAlerts.Columns["Time"].Width = 200;
 
             dgvActiveAlerts.Columns.Add("Ticker", "Ticker");
-            dgvActiveAlerts.Columns["Ticker"].Width = 120;
-
-            dgvActiveAlerts.Columns.Add("Message", "Alert Details");
 
             // Add the Action Button Column
             DataGridViewButtonColumn btnAcknowledge = new DataGridViewButtonColumn
             {
                 HeaderText = "Action",
-                Text = "Acknowledge",
+                Text = "Read Details",
                 UseColumnTextForButtonValue = true,
                 FlatStyle = FlatStyle.Flat,
                 Width = 150
@@ -87,6 +88,20 @@ namespace Final.UI
             this.Controls.Add(pnlHeader);
         }
 
+        private void PopulateExistingAlerts()
+        {
+            var allRules = _engine.getAlertService().getRules();
+
+            foreach (var rule in allRules)
+            {
+                if (rule.IsSuspended)
+                {
+                    // Order must match column setup: RuleId, Message, Time, Ticker
+                    dgvActiveAlerts.Rows.Insert(0, rule.RuleId.ToString(), rule.LastAlertMessage, rule.LastTriggerTime, rule.TargetTicker);
+                }
+            }
+        }
+
         private void HandleNewAlert(AlertRule rule, string message)
         {
             if (this.InvokeRequired)
@@ -95,22 +110,27 @@ namespace Final.UI
                 return;
             }
 
-            // Add the newly triggered alert to the grid. 
-            // Because the backend suspended the rule, this row will NOT duplicate.
             string timeStr = DateTime.Now.ToString("HH:mm:ss.fff");
-            dgvActiveAlerts.Rows.Insert(0, rule.RuleId.ToString(), timeStr, rule.TargetTicker, message);
+
+            // Order must match column setup: RuleId, Message, Time, Ticker
+            dgvActiveAlerts.Rows.Insert(0, rule.RuleId.ToString(), message, timeStr, rule.TargetTicker);
         }
 
         private void DgvActiveAlerts_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            // Check if they clicked the button column (Index 4)
             if (e.RowIndex >= 0 && e.ColumnIndex == 4)
             {
-                // Grab the hidden Rule ID from the row
                 string rawId = dgvActiveAlerts.Rows[e.RowIndex].Cells["RuleId"].Value.ToString();
+                string alertMsg = dgvActiveAlerts.Rows[e.RowIndex].Cells["Message"].Value.ToString();
+                string ticker = dgvActiveAlerts.Rows[e.RowIndex].Cells["Ticker"].Value.ToString();
 
                 if (Guid.TryParse(rawId, out Guid ruleId))
                 {
-                    // Tell the backend to wake the rule back up
+                    // Show the popup with the full details FIRST
+                    MessageBox.Show(alertMsg, $"Alert Triggered - {ticker}", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Once they close the MessageBox, tell the backend to wake the rule back up
                     _engine.getAlertService().acknowledgeRule(ruleId);
 
                     // Remove the alert from the UI
@@ -124,19 +144,6 @@ namespace Final.UI
             if (_engine != null)
             {
                 _engine.getAlertService().onAlertGenerated -= HandleNewAlert;
-            }
-        }
-
-        private void populateExistingAlerts()
-        {
-            var allRules = _engine.getAlertService().getRules();
-
-            foreach (var rule in allRules)
-            {
-                if (rule.IsSuspended)
-                {
-                    dgvActiveAlerts.Rows.Insert(0, rule.RuleId.ToString(), rule.LastTriggerTime, rule.TargetTicker, rule.LastAlertMessage);
-                }
             }
         }
     }

@@ -8,5 +8,6 @@ namespace Final.Providers
         Task connect();
         Task disconnect();
         Task subscribe(string ticker);
+        long getCurrentLatencyMs();
     }
 }

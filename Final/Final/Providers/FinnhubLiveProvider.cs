@@ -15,6 +15,7 @@ namespace Final.Providers
         private readonly string _apiKey = "d7tn2f9r01qlbd3kp3d0d7tn2f9r01qlbd3kp3dg";
         private ClientWebSocket _webSocket;
         private CancellationTokenSource _cancellationTokenSource;
+        private long _currentLatencyMs = 0;
 
         public MarketDataCache DataTarget { get; set; }
 
@@ -49,8 +50,6 @@ namespace Final.Providers
                     _webSocket.State == WebSocketState.CloseReceived ||
                     _webSocket.State == WebSocketState.CloseSent)
                 {
-                    // Use a short timeout or CancellationToken.None here to ensure 
-                    // the close handshake finishes even if the main token is canceled.
                     await _webSocket.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
                 }
             }
@@ -77,6 +76,11 @@ namespace Final.Providers
             }
         }
 
+        public long getCurrentLatencyMs()
+        {
+            return _currentLatencyMs;
+        }
+
         private async Task ListenForData(CancellationToken cancellationToken)
         {
             var buffer = new byte[1024 * 4];
@@ -100,17 +104,17 @@ namespace Final.Providers
         {
             try
             {
-                // Finnhub sends pings and status updates over the socket.
-                // We drop them immediately to avoid wasting time on non-trade events.
                 if (!json.Contains("\"type\":\"trade\"")) return;
 
                 var tradeEvent = JsonSerializer.Deserialize<FinnhubTradeMessage>(json);
 
                 if (tradeEvent?.Data != null)
                 {
-                    // Finnhub batches trades into a single message array during high-volume periods.
                     foreach (var trade in tradeEvent.Data)
                     {
+                        _currentLatencyMs = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() - trade.Timestamp;
+                        if (_currentLatencyMs <= 0) _currentLatencyMs = 1;
+
                         TradeDataPoint newPoint = new TradeDataPoint(trade.Symbol)
                         {
                             Price = trade.Price,

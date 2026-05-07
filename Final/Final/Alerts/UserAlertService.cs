@@ -89,5 +89,12 @@ namespace Final.Alerts
                 }
             }
         }
+        public void removeRule(Guid ruleId)
+        {
+            lock (_rulesLock)
+            {
+                _activeRules.RemoveAll(r => r.RuleId == ruleId);
+            }
+        }
     }
 }

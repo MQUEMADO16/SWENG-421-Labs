@@ -17,6 +17,11 @@ namespace Final.Providers
             return Task.CompletedTask;
         }
 
+        public long getCurrentLatencyMs()
+        {
+            throw new NotImplementedException();
+        }
+
         public Task subscribe(string ticker)
         {
             return Task.CompletedTask;
